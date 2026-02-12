@@ -20,6 +20,7 @@ import {
   registerSidebarEntry,
 } from '@kinvolk/headlamp-plugin/lib';
 import React from 'react';
+import { ApiErrorBoundary, GenericErrorBoundary } from './components/ErrorBoundary';
 import { SealedSecretDetail } from './components/SealedSecretDetail';
 import { SealedSecretList } from './components/SealedSecretList';
 import { SealingKeysView } from './components/SealingKeysView';
@@ -71,7 +72,11 @@ registerSidebarEntry({
 registerRoute({
   path: '/sealedsecrets',
   sidebar: 'sealed-secrets-list',
-  component: () => <SealedSecretList />,
+  component: () => (
+    <ApiErrorBoundary>
+      <SealedSecretList />
+    </ApiErrorBoundary>
+  ),
   exact: true,
 });
 
@@ -79,7 +84,11 @@ registerRoute({
 registerRoute({
   path: '/sealedsecrets/:namespace/:name',
   sidebar: 'sealed-secrets-list',
-  component: () => <SealedSecretDetail />,
+  component: () => (
+    <ApiErrorBoundary>
+      <SealedSecretDetail />
+    </ApiErrorBoundary>
+  ),
   exact: true,
   name: 'sealedsecret',
 });
@@ -88,7 +97,11 @@ registerRoute({
 registerRoute({
   path: '/sealedsecrets/keys',
   sidebar: 'sealing-keys',
-  component: () => <SealingKeysView />,
+  component: () => (
+    <ApiErrorBoundary>
+      <SealingKeysView />
+    </ApiErrorBoundary>
+  ),
   exact: true,
 });
 
@@ -96,7 +109,11 @@ registerRoute({
 registerRoute({
   path: '/sealedsecrets/settings',
   sidebar: 'sealed-secrets-settings',
-  component: () => <SettingsPage />,
+  component: () => (
+    <GenericErrorBoundary>
+      <SettingsPage />
+    </GenericErrorBoundary>
+  ),
   exact: true,
 });
 
@@ -107,7 +124,11 @@ registerRoute({
  */
 registerDetailsViewSection(({ resource }) => {
   if (resource?.kind === 'Secret') {
-    return <SecretDetailsSection resource={resource} />;
+    return (
+      <GenericErrorBoundary>
+        <SecretDetailsSection resource={resource} />
+      </GenericErrorBoundary>
+    );
   }
   return null;
 });
