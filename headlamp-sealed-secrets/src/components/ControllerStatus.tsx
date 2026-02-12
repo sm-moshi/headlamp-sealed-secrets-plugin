@@ -6,9 +6,10 @@
  */
 
 import { CheckCircle, Error as ErrorIcon, Warning } from '@mui/icons-material';
-import { Box, Chip, CircularProgress, Tooltip, Typography } from '@mui/material';
+import { Box, Chip, Tooltip, Typography } from '@mui/material';
 import React from 'react';
 import { useControllerHealth } from '../hooks/useControllerHealth';
+import { ControllerHealthSkeleton } from './LoadingSkeletons';
 
 interface ControllerStatusProps {
   /** Whether to auto-refresh the status */
@@ -29,15 +30,9 @@ export function ControllerStatus({
 }: ControllerStatusProps) {
   const { health: status, loading } = useControllerHealth(autoRefresh, refreshIntervalMs);
 
+  // Show skeleton while loading
   if (loading || !status) {
-    return (
-      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-        <CircularProgress size={16} />
-        <Typography variant="body2" color="text.secondary">
-          Checking controller...
-        </Typography>
-      </Box>
-    );
+    return <ControllerHealthSkeleton />;
   }
 
   // Build status message and icon

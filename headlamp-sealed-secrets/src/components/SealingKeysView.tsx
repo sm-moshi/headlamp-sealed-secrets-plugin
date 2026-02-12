@@ -13,6 +13,7 @@ import { fetchPublicCertificate, getPluginConfig } from '../lib/controller';
 import { isCertificateExpiringSoon, parseCertificateInfo } from '../lib/crypto';
 import { CertificateInfo, PEMCertificate } from '../types';
 import { ControllerStatus } from './ControllerStatus';
+import { SealingKeysListSkeleton } from './LoadingSkeletons';
 
 interface SealingKey {
   name: string;
@@ -26,7 +27,7 @@ interface SealingKey {
  */
 export function SealingKeysView() {
   const config = getPluginConfig();
-  const [secrets] = K8s.ResourceClasses.Secret.useList({ namespace: config.controllerNamespace });
+  const [secrets, , loading] = K8s.ResourceClasses.Secret.useList({ namespace: config.controllerNamespace });
   const { enqueueSnackbar } = useSnackbar();
 
   // Filter for sealing key secrets
@@ -91,6 +92,15 @@ export function SealingKeysView() {
       enqueueSnackbar(`Failed to create download: ${error.message}`, { variant: 'error' });
     }
   };
+
+  // Show loading skeleton while data is being fetched
+  if (loading) {
+    return (
+      <SectionBox title="Sealing Keys">
+        <SealingKeysListSkeleton />
+      </SectionBox>
+    );
+  }
 
   return (
     <SectionBox

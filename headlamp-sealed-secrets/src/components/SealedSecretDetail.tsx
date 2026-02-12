@@ -6,7 +6,7 @@
  */
 
 import { K8s } from '@kinvolk/headlamp-plugin/lib';
-import { Link, Loader } from '@kinvolk/headlamp-plugin/lib/CommonComponents';
+import { Link } from '@kinvolk/headlamp-plugin/lib/CommonComponents';
 import {
   NameValueTable,
   SectionBox,
@@ -23,6 +23,7 @@ import { canDecryptSecrets } from '../lib/rbac';
 import { SealedSecret } from '../lib/SealedSecretCRD';
 import { SealedSecretScope } from '../types';
 import { DecryptDialog } from './DecryptDialog';
+import { SealedSecretDetailSkeleton } from './LoadingSkeletons';
 
 /**
  * Format scope for display
@@ -61,8 +62,9 @@ export function SealedSecretDetail() {
     }
   }, [namespace]);
 
+  // Show loading skeleton while data is being fetched
   if (!sealedSecret) {
-    return <Loader title="Loading SealedSecret..." />;
+    return <SealedSecretDetailSkeleton />;
   }
 
   // Memoize callbacks to prevent re-renders

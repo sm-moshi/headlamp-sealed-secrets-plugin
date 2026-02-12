@@ -17,6 +17,7 @@ import { usePermission } from '../hooks/usePermissions';
 import { SealedSecret } from '../lib/SealedSecretCRD';
 import { SealedSecretScope } from '../types';
 import { EncryptDialog } from './EncryptDialog';
+import { SealedSecretListSkeleton } from './LoadingSkeletons';
 import { VersionWarning } from './VersionWarning';
 
 /**
@@ -39,7 +40,7 @@ function formatScope(scope: SealedSecretScope): string {
  * SealedSecrets list view component
  */
 export function SealedSecretList() {
-  const [sealedSecrets, error] = SealedSecret.useList();
+  const [sealedSecrets, error, loading] = SealedSecret.useList();
   const [createDialogOpen, setCreateDialogOpen] = React.useState(false);
   const { allowed: canCreate } = usePermission(undefined, 'canCreate');
 
@@ -109,6 +110,15 @@ export function SealedSecretList() {
         : [],
     [canCreate, handleOpenDialog]
   );
+
+  // Show loading skeleton while data is being fetched
+  if (loading) {
+    return (
+      <SectionBox title="Sealed Secrets">
+        <SealedSecretListSkeleton />
+      </SectionBox>
+    );
+  }
 
   // Show error if CRD is not installed
   if (error) {
