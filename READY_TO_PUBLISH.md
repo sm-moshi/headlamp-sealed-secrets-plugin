@@ -26,7 +26,7 @@ All code is complete, tested, and committed to the `main` branch.
 
 ### 1. Create GitHub Repository
 ```bash
-# On GitHub: Create repository "headlamp-sealed-secrets-plugin" under cpfarhood
+# On GitHub: Create repository "headlamp-sealed-secrets-plugin" under privilegedescalation
 # Then run:
 git remote add origin https://github.com/privilegedescalation/headlamp-sealed-secrets-plugin.git
 git push -u origin main

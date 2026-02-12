@@ -27,19 +27,19 @@ Download and extract the latest release:
 
 **macOS:**
 ```bash
-curl -LO https://github.com/privilegedescalation/headlamp-sealed-secrets-plugin/releases/download/v0.2.0/headlamp-sealed-secrets-0.2.0.tar.gz
-tar -xzf headlamp-sealed-secrets-0.2.0.tar.gz -C ~/Library/Application\ Support/Headlamp/plugins/
+curl -LO https://github.com/privilegedescalation/headlamp-sealed-secrets-plugin/releases/download/v0.2.4/headlamp-sealed-secrets-0.2.4.tar.gz
+tar -xzf headlamp-sealed-secrets-0.2.4.tar.gz -C ~/Library/Application\ Support/Headlamp/plugins/
 ```
 
 **Linux:**
 ```bash
-curl -LO https://github.com/privilegedescalation/headlamp-sealed-secrets-plugin/releases/download/v0.2.0/headlamp-sealed-secrets-0.2.0.tar.gz
-tar -xzf headlamp-sealed-secrets-0.2.0.tar.gz -C ~/.config/Headlamp/plugins/
+curl -LO https://github.com/privilegedescalation/headlamp-sealed-secrets-plugin/releases/download/v0.2.4/headlamp-sealed-secrets-0.2.4.tar.gz
+tar -xzf headlamp-sealed-secrets-0.2.4.tar.gz -C ~/.config/Headlamp/plugins/
 ```
 
 **Windows (PowerShell):**
 ```powershell
-Invoke-WebRequest -Uri https://github.com/privilegedescalation/headlamp-sealed-secrets-plugin/releases/download/v0.2.0/headlamp-sealed-secrets-0.2.0.tar.gz -OutFile headlamp-sealed-secrets-0.2.0.tar.gz
+Invoke-WebRequest -Uri https://github.com/privilegedescalation/headlamp-sealed-secrets-plugin/releases/download/v0.2.4/headlamp-sealed-secrets-0.2.4.tar.gz -OutFile headlamp-sealed-secrets-0.2.4.tar.gz
 # Extract to %APPDATA%\Headlamp\plugins\
 ```
 

@@ -93,7 +93,7 @@ Production deployment guides:
 
 ### External Resources
 
-- **GitHub**: [cpfarhood/headlamp-sealed-secrets-plugin](https://github.com/privilegedescalation/headlamp-sealed-secrets-plugin)
+- **GitHub**: [privilegedescalation/headlamp-sealed-secrets-plugin](https://github.com/privilegedescalation/headlamp-sealed-secrets-plugin)
 - **Issues**: [Report bugs](https://github.com/privilegedescalation/headlamp-sealed-secrets-plugin/issues)
 - **Discussions**: [Ask questions](https://github.com/privilegedescalation/headlamp-sealed-secrets-plugin/discussions)
 - **Headlamp**: [headlamp.dev](https://headlamp.dev)

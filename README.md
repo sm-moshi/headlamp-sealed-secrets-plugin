@@ -241,7 +241,7 @@ See [CHANGELOG.md](CHANGELOG.md) for version history.
 
 ### Need Help?
 
-1. **📖 Check Documentation First**
+1. ** Check Documentation First**
    - [Troubleshooting Guide](docs/troubleshooting/) - Common issues and solutions
    - [User Guide](docs/user-guide/) - Feature documentation
    - [API Reference](docs/api-reference/generated/) - TypeScript API docs
@@ -250,10 +250,10 @@ See [CHANGELOG.md](CHANGELOG.md) for version history.
    - [Open Issues](https://github.com/privilegedescalation/headlamp-sealed-secrets-plugin/issues)
    - [Closed Issues](https://github.com/privilegedescalation/headlamp-sealed-secrets-plugin/issues?q=is%3Aissue+is%3Aclosed)
 
-3. **💬 Ask the Community**
+3. ** Ask the Community**
    - [GitHub Discussions](https://github.com/privilegedescalation/headlamp-sealed-secrets-plugin/discussions)
 
-4. **🐛 Report a Bug**
+4. ** Report a Bug**
    - [Create New Issue](https://github.com/privilegedescalation/headlamp-sealed-secrets-plugin/issues/new)
    - Include: Plugin version, Headlamp version, error messages, steps to reproduce
 
@@ -281,10 +281,10 @@ Built with:
 
 ### Project Resources
 - **[Releases](https://github.com/privilegedescalation/headlamp-sealed-secrets-plugin/releases)** - Download plugin
-- 📚 **[Documentation](docs/README.md)** - Complete docs
-- 🐛 **[Issues](https://github.com/privilegedescalation/headlamp-sealed-secrets-plugin/issues)** - Bug reports
-- 💬 **[Discussions](https://github.com/privilegedescalation/headlamp-sealed-secrets-plugin/discussions)** - Q&A
-- 📝 **[Changelog](CHANGELOG.md)** - Version history
+-  **[Documentation](docs/README.md)** - Complete docs
+-  **[Issues](https://github.com/privilegedescalation/headlamp-sealed-secrets-plugin/issues)** - Bug reports
+-  **[Discussions](https://github.com/privilegedescalation/headlamp-sealed-secrets-plugin/discussions)** - Q&A
+-  **[Changelog](CHANGELOG.md)** - Version history
 
 ### External Resources
 - **[Headlamp](https://headlamp.dev)** - Kubernetes UI framework

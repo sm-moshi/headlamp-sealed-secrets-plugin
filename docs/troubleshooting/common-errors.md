@@ -31,8 +31,8 @@ Error loading plugin headlamp-sealed-secrets: Invalid plugin manifest
 
 2. Reinstall from latest release:
    ```bash
-   curl -LO https://github.com/privilegedescalation/headlamp-sealed-secrets-plugin/releases/download/v0.2.0/headlamp-sealed-secrets-0.2.0.tar.gz
-   tar -xzf headlamp-sealed-secrets-0.2.0.tar.gz -C ~/Library/Application\ Support/Headlamp/plugins/
+   curl -LO https://github.com/privilegedescalation/headlamp-sealed-secrets-plugin/releases/download/v0.2.4/headlamp-sealed-secrets-0.2.4.tar.gz
+   tar -xzf headlamp-sealed-secrets-0.2.4.tar.gz -C ~/Library/Application\ Support/Headlamp/plugins/
    ```
 
 3. Restart Headlamp

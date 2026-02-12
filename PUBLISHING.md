@@ -7,7 +7,7 @@ This guide covers how to publish the plugin to NPM, GitHub, and Artifact Hub.
 Before publishing, ensure you have:
 
 1. **NPM Account** - Create one at https://www.npmjs.com
-2. **GitHub Account** - Already set up (cpfarhood)
+2. **GitHub Account** - Already set up (privilegedescalation)
 3. **Artifact Hub** - Repository already configured (ID: 5574d37c-c4ae-45ab-a378-ef24aaba5b4c)
 
 ## Step 1: Initial Setup
@@ -115,7 +115,7 @@ The repository includes automated workflows:
 
 ```bash
 # Initialize git (if not already done)
-cd /Users/cpfarhood/Documents/Repositories/headlamp-sealed-secrets-plugin
+cd /Users/privilegedescalation/Documents/Repositories/headlamp-sealed-secrets-plugin
 git init
 git add .
 git commit -m "Initial commit: Headlamp Sealed Secrets plugin"
@@ -225,7 +225,7 @@ When releasing new versions:
 If the NPM package name is taken, update `package.json`:
 ```json
 {
-  "name": "@cpfarhood/headlamp-sealed-secrets"
+  "name": "@privilegedescalation/headlamp-sealed-secrets"
 }
 ```
 
