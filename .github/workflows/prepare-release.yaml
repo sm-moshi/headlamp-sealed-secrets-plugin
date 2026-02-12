@@ -11,6 +11,8 @@ on:
 jobs:
   prepare:
     runs-on: local-ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - name: Validate version format
         run: |
