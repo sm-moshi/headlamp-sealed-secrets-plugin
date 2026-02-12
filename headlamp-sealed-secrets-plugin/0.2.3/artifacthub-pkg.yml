@@ -1,0 +1,41 @@
+# Artifact Hub package metadata file
+version: 0.2.3
+name: headlamp-sealed-secrets
+displayName: Sealed Secrets Plugin for Headlamp
+createdAt: "2026-02-12T00:00:00Z"
+description: A comprehensive Headlamp plugin for managing Bitnami Sealed Secrets with client-side encryption and RBAC-aware UI
+license: Apache-2.0
+homeURL: https://github.com/cpfarhood/headlamp-sealed-secrets-plugin
+appVersion: 0.2.3
+containersImages:
+  - name: sealed-secrets-controller
+    image: docker.io/bitnami/sealed-secrets-controller:v0.24.0
+keywords:
+  - headlamp
+  - kubernetes
+  - sealed-secrets
+  - secrets
+  - encryption
+  - security
+annotations:
+  headlamp/plugin/archive-url: "https://github.com/cpfarhood/headlamp-sealed-secrets-plugin/releases/download/v0.2.3/headlamp-sealed-secrets-0.2.3.tar.gz"
+  headlamp/plugin/archive-checksum: "SHA256:03787323abc9430a63433838253b2dd8296d237000acdfe4ce2507678b63125f"
+  headlamp/plugin/version-compat: ">=0.13.0"
+  headlamp/plugin/distro-compat: "desktop,in-cluster,web,docker-desktop"
+links:
+  - name: Source Code
+    url: https://github.com/cpfarhood/headlamp-sealed-secrets-plugin
+  - name: Sealed Secrets
+    url: https://github.com/bitnami-labs/sealed-secrets
+  - name: Headlamp
+    url: https://headlamp.dev
+maintainers:
+  - name: cpfarhood
+    email: cpfarhood@users.noreply.github.com
+recommendations:
+  - url: https://artifacthub.io/packages/helm/sealed-secrets/sealed-secrets
+provider:
+  name: cpfarhood
+changes:
+  - kind: fixed
+    description: "Replace @mui/icons-material with @iconify/react to fix icon loading errors"

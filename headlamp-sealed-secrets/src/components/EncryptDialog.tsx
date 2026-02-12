@@ -6,7 +6,7 @@
  */
 
 import { K8s } from '@kinvolk/headlamp-plugin/lib';
-import { Add as AddIcon, Delete as DeleteIcon, Visibility, VisibilityOff } from '@mui/icons-material';
+import { Icon } from '@iconify/react';
 import {
   Box,
   Button,
@@ -222,7 +222,7 @@ export function EncryptDialog({ open, onClose }: EncryptDialogProps) {
                       aria-label={kv.showValue ? 'Hide password' : 'Show password'}
                       tabIndex={0}
                     >
-                      {kv.showValue ? <VisibilityOff /> : <Visibility />}
+                      {kv.showValue ? <Icon icon="mdi:eye-off" /> : <Icon icon="mdi:eye" />}
                     </IconButton>
                   ),
                 }}
@@ -234,13 +234,13 @@ export function EncryptDialog({ open, onClose }: EncryptDialogProps) {
                 aria-label={`Remove key-value pair ${index + 1}`}
                 title={keyValues.length === 1 ? 'At least one key-value pair is required' : `Remove key-value pair ${index + 1}`}
               >
-                <DeleteIcon />
+                <Icon icon="mdi:delete" />
               </IconButton>
             </Box>
           ))}
 
           <Button
-            startIcon={<AddIcon />}
+            startIcon={<Icon icon="mdi:plus" />}
             onClick={handleAddKeyValue}
             aria-label="Add another key-value pair"
           >

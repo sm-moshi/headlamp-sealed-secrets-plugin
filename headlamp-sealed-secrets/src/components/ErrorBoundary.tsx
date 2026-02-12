@@ -4,7 +4,7 @@
  * Provides graceful error handling for crypto and API operations
  */
 
-import { ErrorOutline } from '@mui/icons-material';
+import { Icon } from '@iconify/react';
 import { Alert, Box, Button, Typography } from '@mui/material';
 import React, { Component, ReactNode } from 'react';
 
@@ -71,7 +71,7 @@ export class CryptoErrorBoundary extends BaseErrorBoundary {
       <Box p={3}>
         <Alert
           severity="error"
-          icon={<ErrorOutline />}
+          icon={<Icon icon="mdi:alert-circle-outline" />}
           action={
             <Button color="inherit" size="small" onClick={this.handleReset}>
               Retry
@@ -116,7 +116,7 @@ export class ApiErrorBoundary extends BaseErrorBoundary {
       <Box p={3}>
         <Alert
           severity="error"
-          icon={<ErrorOutline />}
+          icon={<Icon icon="mdi:alert-circle-outline" />}
           action={
             <Button color="inherit" size="small" onClick={this.handleReset}>
               Retry
@@ -163,7 +163,7 @@ export class GenericErrorBoundary extends BaseErrorBoundary {
       <Box p={3}>
         <Alert
           severity="error"
-          icon={<ErrorOutline />}
+          icon={<Icon icon="mdi:alert-circle-outline" />}
           action={
             <Button color="inherit" size="small" onClick={this.handleReset}>
               Reload

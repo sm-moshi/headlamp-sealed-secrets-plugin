@@ -6,7 +6,7 @@
  */
 
 import { K8s } from '@kinvolk/headlamp-plugin/lib';
-import { ContentCopy as CopyIcon, Visibility, VisibilityOff } from '@mui/icons-material';
+import { Icon } from '@iconify/react';
 import {
   Box,
   Button,
@@ -155,7 +155,7 @@ export function DecryptDialog({ sealedSecret, secretKey, onClose }: DecryptDialo
                     aria-label={showValue ? 'Hide secret value' : 'Show secret value'}
                     title={showValue ? 'Hide secret value' : 'Show secret value'}
                   >
-                    {showValue ? <VisibilityOff /> : <Visibility />}
+                    {showValue ? <Icon icon="mdi:eye-off" /> : <Icon icon="mdi:eye" />}
                   </IconButton>
                   <IconButton
                     onClick={handleCopy}
@@ -163,7 +163,7 @@ export function DecryptDialog({ sealedSecret, secretKey, onClose }: DecryptDialo
                     aria-label="Copy value to clipboard"
                     title="Copy value to clipboard"
                   >
-                    <CopyIcon />
+                    <Icon icon="mdi:content-copy" />
                   </IconButton>
                 </Box>
               ),

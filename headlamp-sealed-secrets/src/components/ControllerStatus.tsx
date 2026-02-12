@@ -5,7 +5,7 @@
  * including reachability, response time, and version information.
  */
 
-import { CheckCircle, Error as ErrorIcon, Warning } from '@mui/icons-material';
+import { Icon } from '@iconify/react';
 import { Box, Chip, Tooltip, Typography } from '@mui/material';
 import React from 'react';
 import { useControllerHealth } from '../hooks/useControllerHealth';
@@ -37,18 +37,18 @@ export function ControllerStatus({
 
   // Build status message and icon
   let statusColor: 'success' | 'error' | 'warning' = 'error';
-  let StatusIcon = ErrorIcon;
+  let statusIcon = 'mdi:alert-circle';
   let statusLabel = 'Unreachable';
   let tooltipText = status.error || 'Controller is unreachable';
 
   if (status.healthy) {
     statusColor = 'success';
-    StatusIcon = CheckCircle;
+    statusIcon = 'mdi:check-circle';
     statusLabel = 'Healthy';
     tooltipText = `Controller is healthy${status.version ? ` (${status.version})` : ''}`;
   } else if (status.reachable) {
     statusColor = 'warning';
-    StatusIcon = Warning;
+    statusIcon = 'mdi:alert';
     statusLabel = 'Unhealthy';
     tooltipText = status.error || 'Controller responded but is not healthy';
   }
@@ -57,7 +57,7 @@ export function ControllerStatus({
     <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
       <Tooltip title={tooltipText}>
         <Chip
-          icon={<StatusIcon />}
+          icon={<Icon icon={statusIcon} />}
           label={statusLabel}
           color={statusColor}
           size="small"
