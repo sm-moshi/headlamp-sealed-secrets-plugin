@@ -1,0 +1,6 @@
+# Artifact Hub repository metadata file
+# https://github.com/artifacthub/hub/blob/master/docs/metadata/artifacthub-repo.yml
+repositoryID: 5574d37c-c4ae-45ab-a378-ef24aaba5b4c
+owners:
+  - name: cpfarhood
+    email: cpfarhood@users.noreply.github.com

@@ -1,0 +1,54 @@
+name: Publish Plugin
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Install dependencies
+        working-directory: ./headlamp-sealed-secrets
+        run: npm ci
+
+      - name: Run type check
+        working-directory: ./headlamp-sealed-secrets
+        run: npm run tsc
+
+      - name: Run linter
+        working-directory: ./headlamp-sealed-secrets
+        run: npm run lint
+
+      - name: Build plugin
+        working-directory: ./headlamp-sealed-secrets
+        run: npm run build
+
+      - name: Publish to NPM
+        working-directory: ./headlamp-sealed-secrets
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            headlamp-sealed-secrets/dist/main.js
+            headlamp-sealed-secrets/package.json
+            headlamp-sealed-secrets/README.md
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
