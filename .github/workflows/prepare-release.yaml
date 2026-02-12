@@ -10,7 +10,7 @@ on:
 
 jobs:
   prepare:
-    runs-on: local-ubuntu-latest
+    runs-on: [self-hosted, local-ubuntu-latest]
     steps:
       - name: Validate version format
         run: |
