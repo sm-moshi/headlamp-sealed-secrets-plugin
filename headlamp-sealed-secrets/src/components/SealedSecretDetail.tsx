@@ -17,7 +17,9 @@ import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle } from '
 import { useSnackbar } from 'notistack';
 import React from 'react';
 import { useParams } from 'react-router-dom';
+import { usePermissions } from '../hooks/usePermissions';
 import { getPluginConfig, rotateSealedSecret } from '../lib/controller';
+import { canDecryptSecrets } from '../lib/rbac';
 import { SealedSecret } from '../lib/SealedSecretCRD';
 import { SealedSecretScope } from '../types';
 import { DecryptDialog } from './DecryptDialog';
@@ -48,7 +50,16 @@ export function SealedSecretDetail() {
   const [decryptKey, setDecryptKey] = React.useState<string | null>(null);
   const [deleteDialogOpen, setDeleteDialogOpen] = React.useState(false);
   const [rotating, setRotating] = React.useState(false);
+  const [canDecrypt, setCanDecrypt] = React.useState(false);
   const { enqueueSnackbar } = useSnackbar();
+  const { permissions } = usePermissions(namespace);
+
+  // Check if user can decrypt secrets (requires get permission on Secrets)
+  React.useEffect(() => {
+    if (namespace) {
+      canDecryptSecrets(namespace).then(setCanDecrypt);
+    }
+  }, [namespace]);
 
   if (!sealedSecret) {
     return <Loader title="Loading SealedSecret..." />;
@@ -90,21 +101,25 @@ export function SealedSecretDetail() {
             <Box display="flex" alignItems="center" justifyContent="space-between">
               <span>{sealedSecret.metadata.name}</span>
               <Box>
-                <Button
-                  variant="outlined"
-                  onClick={handleRotate}
-                  disabled={rotating}
-                  sx={{ mr: 1 }}
-                >
-                  {rotating ? 'Re-encrypting...' : 'Re-encrypt'}
-                </Button>
-                <Button
-                  variant="outlined"
-                  color="error"
-                  onClick={() => setDeleteDialogOpen(true)}
-                >
-                  Delete
-                </Button>
+                {permissions?.canUpdate && (
+                  <Button
+                    variant="outlined"
+                    onClick={handleRotate}
+                    disabled={rotating}
+                    sx={{ mr: 1 }}
+                  >
+                    {rotating ? 'Re-encrypting...' : 'Re-encrypt'}
+                  </Button>
+                )}
+                {permissions?.canDelete && (
+                  <Button
+                    variant="outlined"
+                    color="error"
+                    onClick={() => setDeleteDialogOpen(true)}
+                  >
+                    Delete
+                  </Button>
+                )}
               </Box>
             </Box>
           }
@@ -168,11 +183,16 @@ export function SealedSecretDetail() {
               },
               {
                 label: 'Actions',
-                getter: (row: any) => (
-                  <Button size="small" onClick={() => setDecryptKey(row.key)}>
-                    Decrypt
-                  </Button>
-                ),
+                getter: (row: any) =>
+                  canDecrypt ? (
+                    <Button size="small" onClick={() => setDecryptKey(row.key)}>
+                      Decrypt
+                    </Button>
+                  ) : (
+                    <Button size="small" disabled title="No permission to access Secrets">
+                      Decrypt
+                    </Button>
+                  ),
               },
             ]}
           />

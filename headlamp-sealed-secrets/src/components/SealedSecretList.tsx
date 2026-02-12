@@ -13,6 +13,7 @@ import {
 } from '@kinvolk/headlamp-plugin/lib/CommonComponents';
 import { Box, Button } from '@mui/material';
 import React from 'react';
+import { usePermission } from '../hooks/usePermissions';
 import { SealedSecret } from '../lib/SealedSecretCRD';
 import { SealedSecretScope } from '../types';
 import { EncryptDialog } from './EncryptDialog';
@@ -39,6 +40,7 @@ function formatScope(scope: SealedSecretScope): string {
 export function SealedSecretList() {
   const [sealedSecrets, error] = SealedSecret.useList();
   const [createDialogOpen, setCreateDialogOpen] = React.useState(false);
+  const { allowed: canCreate } = usePermission(undefined, 'canCreate');
 
   // Show error if CRD is not installed
   if (error) {
@@ -76,16 +78,20 @@ export function SealedSecretList() {
         <SectionFilterHeader
           title=""
           noNamespaceFilter={false}
-          actions={[
-            <Button
-              key="create"
-              variant="contained"
-              color="primary"
-              onClick={() => setCreateDialogOpen(true)}
-            >
-              Create Sealed Secret
-            </Button>,
-          ]}
+          actions={
+            canCreate
+              ? [
+                  <Button
+                    key="create"
+                    variant="contained"
+                    color="primary"
+                    onClick={() => setCreateDialogOpen(true)}
+                  >
+                    Create Sealed Secret
+                  </Button>,
+                ]
+              : []
+          }
         />
         <SimpleTable
           data={sealedSecrets}
