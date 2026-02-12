@@ -1,4 +1,4 @@
-name: Publish Plugin
+name: Publish Release
 
 on:
   push:
@@ -7,18 +7,29 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-and-publish:
+  publish:
     runs-on: local-ubuntu-latest
+    timeout-minutes: 15
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          registry-url: 'https://registry.npmjs.org'
+          cache: 'npm'
+          cache-dependency-path: headlamp-sealed-secrets/package-lock.json
+
+      - name: Extract version from tag
+        id: version
+        run: |
+          VERSION=${GITHUB_REF#refs/tags/v}
+          echo "version=${VERSION}" >> $GITHUB_OUTPUT
+          echo "Version: ${VERSION}"
 
       - name: Install dependencies
         working-directory: ./headlamp-sealed-secrets
@@ -32,23 +43,124 @@ jobs:
         working-directory: ./headlamp-sealed-secrets
         run: npm run lint
 
-      - name: Build plugin
+      - name: Build plugin (deterministic)
         working-directory: ./headlamp-sealed-secrets
         run: npm run build
-
-      - name: Publish to NPM
-        working-directory: ./headlamp-sealed-secrets
-        run: npm publish
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NODE_ENV: production
+
+      - name: Create tarball (deterministic packaging)
+        id: tarball
+        working-directory: ./headlamp-sealed-secrets
+        run: |
+          # Use npm pack to create deterministic tarball
+          TARBALL=$(npm pack --json | jq -r '.[0].filename')
+
+          # Move to parent directory for release
+          mv "${TARBALL}" "../${TARBALL}"
+
+          # Calculate SHA256 checksum
+          CHECKSUM=$(sha256sum "../${TARBALL}" | awk '{print $1}')
+
+          echo "tarball=${TARBALL}" >> $GITHUB_OUTPUT
+          echo "checksum=${CHECKSUM}" >> $GITHUB_OUTPUT
+          echo "Tarball: ${TARBALL}"
+          echo "Checksum: SHA256:${CHECKSUM}"
+
+      - name: Verify tarball contents
+        id: verify
+        run: |
+          TARBALL="${{ steps.tarball.outputs.tarball }}"
+          echo "Verifying tarball: ${TARBALL}"
+
+          # List tarball contents
+          tar -tzf "${TARBALL}" | head -20
+
+          # Verify main.js exists
+          if ! tar -tzf "${TARBALL}" | grep -q "package/dist/main.js"; then
+            echo "Error: main.js not found in tarball"
+            exit 1
+          fi
+
+          # Get file size
+          SIZE=$(ls -lh "${TARBALL}" | awk '{print $5}')
+          echo "Size: ${SIZE}"
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
         with:
-          files: |
-            headlamp-sealed-secrets/dist/main.js
-            headlamp-sealed-secrets/package.json
-            headlamp-sealed-secrets/README.md
+          tag_name: ${{ github.ref_name }}
+          files: ${{ steps.tarball.outputs.tarball }}
           generate_release_notes: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Update artifacthub-pkg.yml with checksum
+        id: update-metadata
+        run: |
+          VERSION="${{ steps.version.outputs.version }}"
+          CHECKSUM="${{ steps.tarball.outputs.checksum }}"
+          ARCHIVE_URL="https://github.com/${{ github.repository }}/releases/download/v${VERSION}/${{ steps.tarball.outputs.tarball }}"
+
+          # Update version, checksum, and archive URL in artifacthub-pkg.yml
+          python3 << 'EOF'
+          import yaml
+          import sys
+
+          version = "${{ steps.version.outputs.version }}"
+          checksum = "${{ steps.tarball.outputs.checksum }}"
+          archive_url = "$ARCHIVE_URL"
+
+          with open('artifacthub-pkg.yml', 'r') as f:
+              data = yaml.safe_load(f)
+
+          # Update version fields
+          data['version'] = version
+          data['appVersion'] = version
+
+          # Update annotations with archive URL and checksum
+          data['annotations']['headlamp/plugin/archive-url'] = archive_url
+          data['annotations']['headlamp/plugin/archive-checksum'] = f'SHA256:{checksum}'
+
+          with open('artifacthub-pkg.yml', 'w') as f:
+              yaml.dump(data, f, sort_keys=False, default_flow_style=False)
+
+          print(f"Updated artifacthub-pkg.yml:")
+          print(f"  Version: {version}")
+          print(f"  Checksum: SHA256:{checksum}")
+          print(f"  Archive URL: {archive_url}")
+          EOF
+
+      - name: Verify metadata update
+        run: |
+          echo "Updated artifacthub-pkg.yml:"
+          grep -A 2 "version:" artifacthub-pkg.yml | head -5
+          grep "archive-url:" artifacthub-pkg.yml
+          grep "archive-checksum:" artifacthub-pkg.yml
+
+      - name: Commit metadata update
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          # Check if there are changes to commit
+          if git diff --quiet artifacthub-pkg.yml; then
+            echo "No changes to commit (metadata already up to date)"
+          else
+            echo "Committing metadata update..."
+            git add artifacthub-pkg.yml
+            git commit -m "chore(release): update checksums for v${{ steps.version.outputs.version }}"
+            git push origin main
+          fi
+
+      - name: Print release summary
+        run: |
+          echo "Release Summary:"
+          echo "=================="
+          echo "Version: v${{ steps.version.outputs.version }}"
+          echo "Tarball: ${{ steps.tarball.outputs.tarball }}"
+          echo "Checksum: SHA256:${{ steps.tarball.outputs.checksum }}"
+          echo "Archive URL: https://github.com/${{ github.repository }}/releases/download/v${{ steps.version.outputs.version }}/${{ steps.tarball.outputs.tarball }}"
+          echo ""
+          echo "Next: Verify on Artifact Hub (5-10 minutes)"
+          echo "https://artifacthub.io/packages/headlamp-sealed-secrets"
