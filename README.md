@@ -28,7 +28,7 @@ A comprehensive [Headlamp](https://headlamp.dev) plugin for managing [Bitnami Se
 - **WCAG 2.1 AA Compliant**: Semantic HTML, ARIA labels, keyboard navigation
 - **Screen Reader Support**: Descriptive labels and live regions
 
-### 🎯 Built for Reliability
+### 🛠️ Additional Features
 - **Health Monitoring**: Real-time controller status checks
 - **Input Validation**: Kubernetes-compliant name/value validation
 - **Retry Logic**: Exponential backoff with jitter for resilient API calls
