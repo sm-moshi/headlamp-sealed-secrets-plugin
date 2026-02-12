@@ -5,8 +5,8 @@
  * Kubernetes Secret (requires RBAC permissions to read secrets)
  */
 
-import { K8s } from '@kinvolk/headlamp-plugin/lib';
 import { Icon } from '@iconify/react';
+import { K8s } from '@kinvolk/headlamp-plugin/lib';
 import {
   Box,
   Button,

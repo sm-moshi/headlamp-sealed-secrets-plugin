@@ -8,13 +8,13 @@ import { beforeAll } from 'vitest';
 
 // Mock localStorage for tests
 const localStorageMock = {
-  getItem: (key: string) => {
+  getItem: () => {
     return null;
   },
-  setItem: (key: string, value: string) => {
+  setItem: () => {
     //noop
   },
-  removeItem: (key: string) => {
+  removeItem: () => {
     // noop
   },
   clear: () => {
