@@ -19,6 +19,9 @@ keywords:
   - secrets
   - encryption
   - security
+annotations:
+  headlamp/plugin/archive-url: https://github.com/cpfarhood/headlamp-sealed-secrets-plugin/releases/download/v0.2.0/headlamp-sealed-secrets-0.2.0.tar.gz
+  headlamp/plugin/archive-checksum: 55a1a387d65a8d92545033670d07dedd77a72fd228125331ab93136f8ac87f1c
 links:
   - name: Source Code
     url: https://github.com/cpfarhood/headlamp-sealed-secrets-plugin
@@ -72,4 +75,4 @@ maintainers:
 recommendations:
   - url: https://artifacthub.io/packages/helm/sealed-secrets/sealed-secrets
 provider:
-  name: <YOUR_NAME or ORGANIZATION>
+  name: cpfarhood
