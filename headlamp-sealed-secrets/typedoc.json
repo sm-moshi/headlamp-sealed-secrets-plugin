@@ -1,0 +1,26 @@
+{
+  "$schema": "https://typedoc.org/schema.json",
+  "entryPoints": [
+    "src/lib/crypto.ts",
+    "src/lib/controller.ts",
+    "src/lib/validators.ts",
+    "src/lib/retry.ts",
+    "src/lib/rbac.ts",
+    "src/types.ts",
+    "src/hooks/useSealedSecretEncryption.ts",
+    "src/hooks/usePermissions.ts",
+    "src/hooks/useControllerHealth.ts"
+  ],
+  "out": "../docs/api-reference/generated",
+  "name": "Headlamp Sealed Secrets API",
+  "exclude": ["**/*.test.ts", "**/*.test.tsx", "**/test-setup.ts"],
+  "excludePrivate": true,
+  "excludeProtected": true,
+  "excludeExternals": true,
+  "plugin": ["typedoc-plugin-markdown"],
+  "readme": "none",
+  "githubPages": false,
+  "disableSources": false,
+  "includeVersion": true,
+  "sort": ["source-order"]
+}

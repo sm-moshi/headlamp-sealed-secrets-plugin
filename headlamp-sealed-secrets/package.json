@@ -30,7 +30,9 @@
     "storybook": "headlamp-plugin storybook",
     "storybook-build": "headlamp-plugin storybook-build",
     "test": "headlamp-plugin test",
-    "i18n": "headlamp-plugin i18n"
+    "i18n": "headlamp-plugin i18n",
+    "docs:api": "typedoc",
+    "docs:watch": "typedoc --watch"
   },
   "keywords": [
     "headlamp",
@@ -60,6 +62,8 @@
   },
   "devDependencies": {
     "@kinvolk/headlamp-plugin": "^0.13.1",
-    "@types/node-forge": "^1.3.11"
+    "@types/node-forge": "^1.3.11",
+    "typedoc": "^0.28.16",
+    "typedoc-plugin-markdown": "^4.10.0"
   }
 }
