@@ -5,8 +5,7 @@
  * via the Kubernetes API proxy.
  */
 
-import { request } from '@kinvolk/headlamp-plugin/lib/lib/k8s/apiProxy';
-import { PluginConfig } from '../types';
+import { AsyncResult, Err, PluginConfig, tryCatchAsync } from '../types';
 
 /**
  * Build the controller proxy URL
@@ -20,21 +19,26 @@ export function getControllerProxyURL(config: PluginConfig, path: string): strin
  * Fetch the controller's public certificate
  *
  * @param config Plugin configuration
- * @returns PEM-encoded certificate
+ * @returns Result containing PEM-encoded certificate or error message
  */
-export async function fetchPublicCertificate(config: PluginConfig): Promise<string> {
+export async function fetchPublicCertificate(
+  config: PluginConfig
+): AsyncResult<string, string> {
   const url = getControllerProxyURL(config, '/v1/cert.pem');
 
-  try {
+  const result = await tryCatchAsync(async () => {
     const response = await fetch(url);
     if (!response.ok) {
       throw new Error(`Failed to fetch certificate: ${response.status} ${response.statusText}`);
     }
-    const cert = await response.text();
-    return cert;
-  } catch (error) {
-    throw new Error(`Unable to fetch controller certificate: ${error}`);
+    return await response.text();
+  });
+
+  if (result.ok === false) {
+    return Err(`Unable to fetch controller certificate: ${result.error.message}`);
   }
+
+  return result;
 }
 
 /**
@@ -42,14 +46,15 @@ export async function fetchPublicCertificate(config: PluginConfig): Promise<stri
  *
  * @param config Plugin configuration
  * @param sealedSecretYaml YAML or JSON of the SealedSecret
+ * @returns Result containing verification status or error message
  */
 export async function verifySealedSecret(
   config: PluginConfig,
   sealedSecretYaml: string
-): Promise<boolean> {
+): AsyncResult<boolean, string> {
   const url = getControllerProxyURL(config, '/v1/verify');
 
-  try {
+  const result = await tryCatchAsync(async () => {
     const response = await fetch(url, {
       method: 'POST',
       headers: {
@@ -59,10 +64,13 @@ export async function verifySealedSecret(
     });
 
     return response.ok;
-  } catch (error) {
-    console.error('Verification failed:', error);
-    return false;
+  });
+
+  if (result.ok === false) {
+    return Err(`Verification failed: ${result.error.message}`);
   }
+
+  return result;
 }
 
 /**
@@ -70,15 +78,15 @@ export async function verifySealedSecret(
  *
  * @param config Plugin configuration
  * @param sealedSecretYaml YAML or JSON of the SealedSecret
- * @returns The re-encrypted SealedSecret
+ * @returns Result containing the re-encrypted SealedSecret or error message
  */
 export async function rotateSealedSecret(
   config: PluginConfig,
   sealedSecretYaml: string
-): Promise<string> {
+): AsyncResult<string, string> {
   const url = getControllerProxyURL(config, '/v1/rotate');
 
-  try {
+  const result = await tryCatchAsync(async () => {
     const response = await fetch(url, {
       method: 'POST',
       headers: {
@@ -92,9 +100,13 @@ export async function rotateSealedSecret(
     }
 
     return await response.text();
-  } catch (error) {
-    throw new Error(`Unable to rotate SealedSecret: ${error}`);
+  });
+
+  if (result.ok === false) {
+    return Err(`Unable to rotate SealedSecret: ${result.error.message}`);
   }
+
+  return result;
 }
 
 /**

@@ -4,12 +4,12 @@
  * Lists all sealing key pairs (TLS Secrets) used by the controller
  */
 
-import { SectionBox, SimpleTable, StatusLabel } from '@kinvolk/headlamp-plugin/lib/CommonComponents';
 import { K8s } from '@kinvolk/headlamp-plugin/lib';
+import { SectionBox, SimpleTable, StatusLabel } from '@kinvolk/headlamp-plugin/lib/CommonComponents';
 import { Box, Button } from '@mui/material';
+import forge from 'node-forge';
 import { useSnackbar } from 'notistack';
 import React from 'react';
-import forge from 'node-forge';
 import { fetchPublicCertificate, getPluginConfig } from '../lib/controller';
 
 interface SealingKey {
@@ -76,9 +76,15 @@ export function SealingKeysView() {
   }, [secrets]);
 
   const handleDownloadCert = async () => {
+    const result = await fetchPublicCertificate(config);
+
+    if (result.ok === false) {
+      enqueueSnackbar(`Failed to download certificate: ${result.error}`, { variant: 'error' });
+      return;
+    }
+
     try {
-      const cert = await fetchPublicCertificate(config);
-      const blob = new Blob([cert], { type: 'application/x-pem-file' });
+      const blob = new Blob([result.value], { type: 'application/x-pem-file' });
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
@@ -89,7 +95,7 @@ export function SealingKeysView() {
       URL.revokeObjectURL(url);
       enqueueSnackbar('Certificate downloaded', { variant: 'success' });
     } catch (error: any) {
-      enqueueSnackbar(`Failed to download certificate: ${error.message}`, { variant: 'error' });
+      enqueueSnackbar(`Failed to create download: ${error.message}`, { variant: 'error' });
     }
   };
 

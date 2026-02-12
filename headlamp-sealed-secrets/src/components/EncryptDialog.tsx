@@ -6,6 +6,7 @@
  */
 
 import { K8s } from '@kinvolk/headlamp-plugin/lib';
+import { Add as AddIcon, Delete as DeleteIcon, Visibility, VisibilityOff } from '@mui/icons-material';
 import {
   Box,
   Button,
@@ -21,13 +22,12 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import { Add as AddIcon, Delete as DeleteIcon, Visibility, VisibilityOff } from '@mui/icons-material';
 import { useSnackbar } from 'notistack';
 import React from 'react';
-import { encryptKeyValues, parsePublicKeyFromCert } from '../lib/crypto';
 import { fetchPublicCertificate, getPluginConfig } from '../lib/controller';
+import { encryptKeyValues, parsePublicKeyFromCert } from '../lib/crypto';
 import { SealedSecret } from '../lib/SealedSecretCRD';
-import { SecretKeyValue, SealedSecretScope } from '../types';
+import { SealedSecretScope,SecretKeyValue } from '../types';
 
 interface EncryptDialogProps {
   open: boolean;
@@ -93,19 +93,34 @@ export function EncryptDialog({ open, onClose }: EncryptDialogProps) {
     try {
       // 1. Fetch the controller's public certificate
       const config = getPluginConfig();
-      const pemCert = await fetchPublicCertificate(config);
+      const certResult = await fetchPublicCertificate(config);
+
+      if (certResult.ok === false) {
+        enqueueSnackbar(`Failed to fetch certificate: ${certResult.error}`, { variant: 'error' });
+        return;
+      }
 
       // 2. Parse the public key
-      const publicKey = parsePublicKeyFromCert(pemCert);
+      const keyResult = parsePublicKeyFromCert(certResult.value);
+
+      if (keyResult.ok === false) {
+        enqueueSnackbar(`Invalid certificate: ${keyResult.error}`, { variant: 'error' });
+        return;
+      }
 
       // 3. Encrypt all values client-side
-      const encryptedData = encryptKeyValues(
-        publicKey,
+      const encryptResult = encryptKeyValues(
+        keyResult.value,
         validKeyValues.map(kv => ({ key: kv.key, value: kv.value })),
         namespace,
         name,
         scope
       );
+
+      if (encryptResult.ok === false) {
+        enqueueSnackbar(`Encryption failed: ${encryptResult.error}`, { variant: 'error' });
+        return;
+      }
 
       // 4. Construct the SealedSecret object
       const sealedSecretData: any = {
@@ -117,7 +132,7 @@ export function EncryptDialog({ open, onClose }: EncryptDialogProps) {
           annotations: {},
         },
         spec: {
-          encryptedData,
+          encryptedData: encryptResult.value,
           template: {
             metadata: {},
           },

@@ -6,6 +6,7 @@
  */
 
 import { K8s } from '@kinvolk/headlamp-plugin/lib';
+import { ContentCopy as CopyIcon, Visibility, VisibilityOff } from '@mui/icons-material';
 import {
   Box,
   Button,
@@ -17,7 +18,6 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import { ContentCopy as CopyIcon, Visibility, VisibilityOff } from '@mui/icons-material';
 import { useSnackbar } from 'notistack';
 import React from 'react';
 import { SealedSecret } from '../lib/SealedSecretCRD';

@@ -5,21 +5,20 @@
  * encrypted data, template, resulting Secret, and actions
  */
 
+import { K8s } from '@kinvolk/headlamp-plugin/lib';
 import { Link, Loader } from '@kinvolk/headlamp-plugin/lib/CommonComponents';
 import {
-  ActionButton,
   NameValueTable,
   SectionBox,
   SimpleTable,
   StatusLabel,
 } from '@kinvolk/headlamp-plugin/lib/CommonComponents';
-import { K8s } from '@kinvolk/headlamp-plugin/lib';
 import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
 import { useSnackbar } from 'notistack';
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import { SealedSecret } from '../lib/SealedSecretCRD';
 import { getPluginConfig, rotateSealedSecret } from '../lib/controller';
+import { SealedSecret } from '../lib/SealedSecretCRD';
 import { SealedSecretScope } from '../types';
 import { DecryptDialog } from './DecryptDialog';
 

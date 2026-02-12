@@ -12,18 +12,23 @@
  */
 
 import forge from 'node-forge';
-import { SealedSecretScope } from '../types';
+import { Err, Ok, Result, SealedSecretScope } from '../types';
 
 /**
  * Parse a PEM certificate and extract the RSA public key
+ *
+ * @param pemCert PEM-encoded certificate string
+ * @returns Result containing the public key or an error message
  */
-export function parsePublicKeyFromCert(pemCert: string): forge.pki.rsa.PublicKey {
+export function parsePublicKeyFromCert(
+  pemCert: string
+): Result<forge.pki.rsa.PublicKey, string> {
   try {
     const cert = forge.pki.certificateFromPem(pemCert);
     const publicKey = cert.publicKey as forge.pki.rsa.PublicKey;
-    return publicKey;
+    return Ok(publicKey);
   } catch (error) {
-    throw new Error(`Failed to parse certificate: ${error}`);
+    return Err(`Failed to parse certificate: ${error}`);
   }
 }
 
@@ -36,7 +41,7 @@ export function parsePublicKeyFromCert(pemCert: string): forge.pki.rsa.PublicKey
  * @param name The secret name (for strict scoping)
  * @param key The key name within the secret
  * @param scope The encryption scope
- * @returns Base64-encoded encrypted value
+ * @returns Result containing base64-encoded encrypted value or error message
  */
 export function encryptValue(
   publicKey: forge.pki.rsa.PublicKey,
@@ -45,7 +50,7 @@ export function encryptValue(
   name: string,
   key: string,
   scope: SealedSecretScope
-): string {
+): Result<string, string> {
   try {
     // Generate a random 32-byte (256-bit) AES session key
     const sessionKey = forge.random.getBytesSync(32);
@@ -86,15 +91,16 @@ export function encryptValue(
     // Construct the sealed secret format:
     // [2-byte length of encrypted session key][encrypted session key][IV][encrypted value][auth tag]
     const sessionKeyLength = encryptedSessionKey.length;
-    const lengthBytes = String.fromCharCode((sessionKeyLength >> 8) & 0xff) +
-                        String.fromCharCode(sessionKeyLength & 0xff);
+    const lengthBytes =
+      String.fromCharCode((sessionKeyLength >> 8) & 0xff) +
+      String.fromCharCode(sessionKeyLength & 0xff);
 
     const payload = lengthBytes + encryptedSessionKey + iv + encryptedValue + tag;
 
     // Base64 encode the final payload
-    return forge.util.encode64(payload);
+    return Ok(forge.util.encode64(payload));
   } catch (error) {
-    throw new Error(`Encryption failed: ${error}`);
+    return Err(`Encryption failed: ${error}`);
   }
 }
 
@@ -106,7 +112,7 @@ export function encryptValue(
  * @param namespace The namespace
  * @param name The secret name
  * @param scope The encryption scope
- * @returns Object mapping keys to encrypted values
+ * @returns Result containing object mapping keys to encrypted values, or error message
  */
 export function encryptKeyValues(
   publicKey: forge.pki.rsa.PublicKey,
@@ -114,24 +120,29 @@ export function encryptKeyValues(
   namespace: string,
   name: string,
   scope: SealedSecretScope
-): Record<string, string> {
+): Result<Record<string, string>, string> {
   const encryptedData: Record<string, string> = {};
 
   for (const { key, value } of keyValues) {
-    encryptedData[key] = encryptValue(publicKey, value, namespace, name, key, scope);
+    const result = encryptValue(publicKey, value, namespace, name, key, scope);
+
+    if (result.ok === false) {
+      return Err(`Failed to encrypt key '${key}': ${result.error}`);
+    }
+
+    encryptedData[key] = result.value;
   }
 
-  return encryptedData;
+  return Ok(encryptedData);
 }
 
 /**
  * Validate a PEM certificate
+ *
+ * @param pemCert PEM-encoded certificate string
+ * @returns true if certificate is valid, false otherwise
  */
 export function validateCertificate(pemCert: string): boolean {
-  try {
-    parsePublicKeyFromCert(pemCert);
-    return true;
-  } catch {
-    return false;
-  }
+  const result = parsePublicKeyFromCert(pemCert);
+  return result.ok;
 }
