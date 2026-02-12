@@ -38,7 +38,7 @@ A comprehensive [Headlamp](https://headlamp.dev) plugin for managing [Bitnami Se
 
 ```bash
 # 1. Download and extract plugin
-curl -LO https://github.com/privilegedescalation/headlamp-sealed-secrets-plugin/releases/download/v0.2.0/headlamp-sealed-secrets-0.2.0.tar.gz
+curl -LO https://github.com/privilegedescalation/headlamp-sealed-secrets-plugin/releases/download/v0.2.4/headlamp-sealed-secrets-0.2.4.tar.gz
 tar -xzf headlamp-sealed-secrets-0.2.0.tar.gz -C ~/Library/Application\ Support/Headlamp/plugins/
 
 # 2. Restart Headlamp
@@ -293,7 +293,7 @@ npm run tsc
 
 See [CHANGELOG.md](CHANGELOG.md) for version history.
 
-**Latest release (v0.2.0)**: Type-safe error handling, RBAC integration, accessibility improvements, and 92% test coverage.
+**Latest release (v0.2.4)**: Type-safe error handling, RBAC integration, accessibility improvements, and 92% test coverage.
 
 ## 🐛 Issues & Support
 

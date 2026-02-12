@@ -45,7 +45,7 @@ npm install -g headlamp-sealed-secrets
 
 #### Option 2: Build from Source
 ```bash
-git clone <repository-url>
+git clone https://github.com/privilegedescalation/headlamp-sealed-secrets-plugin
 cd headlamp-sealed-secrets
 npm install
 npm run build

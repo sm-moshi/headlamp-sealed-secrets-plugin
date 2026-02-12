@@ -6,6 +6,43 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+## [0.2.4] - 2026-02-12
+
+### Fixed
+- Replaced `@mui/icons-material` with `@iconify/react` to fix plugin loading
+- Headlamp provides Iconify as a global dependency, not Material-UI icons
+- Plugin now loads correctly and appears in sidebar navigation
+
+### Changed
+- Icon mappings: All Material-UI icons converted to Iconify equivalents
+  - ErrorOutline → `mdi:alert-circle-outline`
+  - ContentCopy → `mdi:content-copy`
+  - Visibility → `mdi:eye`, VisibilityOff → `mdi:eye-off`
+  - CheckCircle → `mdi:check-circle`
+  - Error → `mdi:alert-circle`, Warning → `mdi:alert`
+  - Add → `mdi:plus`, Delete → `mdi:delete`
+- Bundle size: 358.18 kB (98.04 kB gzipped) - unchanged
+
+### Technical
+- Fixed test-setup.ts lint errors (unused parameters)
+- Tarball checksum: `SHA256:49062f6e9f68de49b83d53176d0bc09ce632d3df11e3397459342f51f6282131`
+
+## [0.2.3] - 2026-02-12
+
+### Note
+Version 0.2.3 was published but with checksum mismatch on Artifact Hub. Superseded by v0.2.4.
+
+## [0.2.2] - 2026-02-12
+
+### Fixed
+- Downgraded `@kinvolk/headlamp-plugin` from ^0.13.1 to ^0.13.0 to match Headlamp server version
+- Fixes React context errors and plugin loading issues
+
+## [0.2.1] - 2026-02-12
+
+### Fixed
+- Removed invalid `main` field from package.json that prevented plugin loading
+
 
 ## [0.2.0] - 2026-02-12
 
@@ -73,5 +110,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Dependencies: node-forge for cryptography
 - Compatible with Headlamp v0.13.0+
 
-[Unreleased]: https://github.com/privilegedescalation/headlamp-sealed-secrets-plugin/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/privilegedescalation/headlamp-sealed-secrets-plugin/compare/v0.2.4...HEAD
 [0.1.0]: https://github.com/privilegedescalation/headlamp-sealed-secrets-plugin/releases/tag/v0.1.0
+[0.2.4]: https://github.com/privilegedescalation/headlamp-sealed-secrets-plugin/releases/tag/v0.2.4
+[0.2.3]: https://github.com/privilegedescalation/headlamp-sealed-secrets-plugin/releases/tag/v0.2.3
+[0.2.2]: https://github.com/privilegedescalation/headlamp-sealed-secrets-plugin/releases/tag/v0.2.2
+[0.2.1]: https://github.com/privilegedescalation/headlamp-sealed-secrets-plugin/releases/tag/v0.2.1
+[0.2.0]: https://github.com/privilegedescalation/headlamp-sealed-secrets-plugin/releases/tag/v0.2.0
