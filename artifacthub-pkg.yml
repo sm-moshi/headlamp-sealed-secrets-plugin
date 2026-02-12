@@ -1,0 +1,79 @@
+# Artifact Hub package metadata file
+# https://github.com/artifacthub/hub/blob/master/docs/metadata/artifacthub-pkg.yml
+version: 0.2.4
+name: headlamp-sealed-secrets
+displayName: Sealed Secrets Plugin for Headlamp
+createdAt: "2026-02-12T00:00:00Z"
+description: A comprehensive Headlamp plugin for managing Bitnami Sealed Secrets with client-side encryption and RBAC-aware UI
+license: Apache-2.0
+homeURL: https://github.com/privilegedescalation/headlamp-sealed-secrets-plugin
+appVersion: 0.2.4
+containersImages:
+  - name: sealed-secrets-controller
+    image: docker.io/bitnami/sealed-secrets-controller:v0.24.0
+keywords:
+  - headlamp
+  - kubernetes
+  - sealed-secrets
+  - secrets
+  - encryption
+  - security
+annotations:
+  headlamp/plugin/archive-url: "https://github.com/privilegedescalation/headlamp-sealed-secrets-plugin/releases/download/v0.2.4/headlamp-sealed-secrets-0.2.4.tar.gz"
+  headlamp/plugin/archive-checksum: "SHA256:42545048578d613483993a233326abf6a952b920baf3997fed00e989eb0aa5ba"
+  headlamp/plugin/version-compat: ">=0.13.0"
+  headlamp/plugin/distro-compat: "desktop,in-cluster,web,docker-desktop"
+links:
+  - name: Source Code
+    url: https://github.com/privilegedescalation/headlamp-sealed-secrets-plugin
+  - name: Sealed Secrets
+    url: https://github.com/bitnami-labs/sealed-secrets
+  - name: Headlamp
+    url: https://headlamp.dev
+install: |
+  ## Installation
+
+  ### Prerequisites
+
+  1. Headlamp v0.13.0 or later
+  2. Sealed Secrets controller installed on your cluster:
+     ```bash
+     kubectl apply -f https://github.com/bitnami-labs/sealed-secrets/releases/download/v0.24.0/controller.yaml
+     ```
+
+  ### Install the Plugin
+
+  #### Option 1: From NPM
+  ```bash
+  npm install -g headlamp-sealed-secrets
+  ```
+
+  #### Option 2: Build from Source
+  ```bash
+  git clone https://github.com/privilegedescalation/headlamp-sealed-secrets-plugin
+  cd headlamp-sealed-secrets-plugin/headlamp-sealed-secrets
+  npm install
+  npm run build
+  ```
+
+  Then copy the `dist` folder to your Headlamp plugins directory:
+  - **Linux**: `~/.config/Headlamp/plugins/headlamp-sealed-secrets/`
+  - **macOS**: `~/Library/Application Support/Headlamp/plugins/headlamp-sealed-secrets/`
+  - **Windows**: `%APPDATA%\Headlamp\plugins\headlamp-sealed-secrets\`
+
+  ## Usage
+
+  After installation, navigate to **Sealed Secrets** in the Headlamp sidebar to:
+  - View and manage SealedSecrets
+  - Create new encrypted secrets
+  - Manage sealing keys
+  - Configure controller settings
+
+  For detailed usage instructions, see the [README](https://github.com/privilegedescalation/headlamp-sealed-secrets-plugin/blob/main/headlamp-sealed-secrets/README.md).
+maintainers:
+  - name: privilegedescalation
+    email: privilegedescalation@users.noreply.github.com
+recommendations:
+  - url: https://artifacthub.io/packages/helm/sealed-secrets/sealed-secrets
+provider:
+  name: privilegedescalation
