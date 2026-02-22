@@ -5,8 +5,7 @@
  */
 
 import { SectionBox } from '@kinvolk/headlamp-plugin/lib/CommonComponents';
-import { Box, Button, Divider, TextField, Typography } from '@mui/material';
-import { useSnackbar } from 'notistack';
+import { Alert, Box, Button, Divider, TextField, Typography } from '@mui/material';
 import React from 'react';
 import { getPluginConfig, savePluginConfig } from '../lib/controller';
 import { PluginConfig } from '../types';
@@ -20,6 +19,10 @@ interface PluginSettingsProps {
 
 /**
  * Settings page component
+ *
+ * NOTE: Do NOT use useSnackbar() here — registerPluginSettings renders this
+ * component outside the notistack SnackbarProvider, causing React error #310.
+ * Use local state for save feedback instead.
  */
 export function SettingsPage(props: PluginSettingsProps) {
   const { data, onDataChange } = props;
@@ -29,12 +32,13 @@ export function SettingsPage(props: PluginSettingsProps) {
     controllerNamespace: (data?.controllerNamespace as string) ?? storedConfig.controllerNamespace,
     controllerPort: (data?.controllerPort as number) ?? storedConfig.controllerPort,
   });
-  const { enqueueSnackbar } = useSnackbar();
+  const [saveStatus, setSaveStatus] = React.useState<'idle' | 'saved'>('idle');
 
   const handleSave = () => {
     savePluginConfig(config);
     onDataChange?.(config as unknown as { [key: string]: string | number | boolean });
-    enqueueSnackbar('Settings saved successfully', { variant: 'success' });
+    setSaveStatus('saved');
+    setTimeout(() => setSaveStatus('idle'), 3000);
   };
 
   const handleReset = () => {
@@ -144,7 +148,7 @@ export function SettingsPage(props: PluginSettingsProps) {
             }}
           />
 
-          <Box mt={3} display="flex" gap={2} role="group" aria-label="Settings actions">
+          <Box mt={3} display="flex" gap={2} alignItems="center" role="group" aria-label="Settings actions">
             <Button
               variant="contained"
               onClick={handleSave}
@@ -159,6 +163,11 @@ export function SettingsPage(props: PluginSettingsProps) {
             >
               Reset to Defaults
             </Button>
+            {saveStatus === 'saved' && (
+              <Alert severity="success" sx={{ py: 0 }}>
+                Settings saved successfully
+              </Alert>
+            )}
           </Box>
         </form>
 
