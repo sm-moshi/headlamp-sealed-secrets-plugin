@@ -6,7 +6,6 @@
  */
 
 import React from 'react';
-import { useNotification } from './useNotification';
 import { fetchPublicCertificate, getPluginConfig } from '../lib/controller';
 import {
   encryptKeyValues,
@@ -23,6 +22,7 @@ import {
   PlaintextValue,
   SealedSecretScope,
 } from '../types';
+import { useNotification } from './useNotification';
 
 /**
  * Request parameters for encryption
