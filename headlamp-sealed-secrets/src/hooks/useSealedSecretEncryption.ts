@@ -5,9 +5,9 @@
  * Handles certificate fetching, validation, expiry warnings, encryption, and object creation.
  */
 
-import { useSnackbar } from 'notistack';
 import React from 'react';
 import { fetchPublicCertificate, getPluginConfig } from '../lib/controller';
+import { useNotification } from './useNotification';
 import {
   encryptKeyValues,
   isCertificateExpiringSoon,
@@ -72,7 +72,7 @@ export interface EncryptionResult {
  */
 export function useSealedSecretEncryption() {
   const [encrypting, setEncrypting] = React.useState(false);
-  const { enqueueSnackbar } = useSnackbar();
+  const { enqueueSnackbar } = useNotification();
 
   const encrypt = React.useCallback(
     async (request: EncryptionRequest): AsyncResult<EncryptionResult, string> => {

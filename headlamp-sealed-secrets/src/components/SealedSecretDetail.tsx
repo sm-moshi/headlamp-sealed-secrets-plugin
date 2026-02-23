@@ -26,7 +26,6 @@ import {
   IconButton,
   Typography,
 } from '@mui/material';
-import { useSnackbar } from 'notistack';
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import { usePermissions } from '../hooks/usePermissions';
@@ -34,6 +33,7 @@ import { getPluginConfig, rotateSealedSecret } from '../lib/controller';
 import { canDecryptSecrets } from '../lib/rbac';
 import { SealedSecret } from '../lib/SealedSecretCRD';
 import { SealedSecretScope } from '../types';
+import { useNotification } from '../hooks/useNotification';
 import { DecryptDialog } from './DecryptDialog';
 import { SealedSecretDetailSkeleton } from './LoadingSkeletons';
 
@@ -64,7 +64,7 @@ export function SealedSecretDetail() {
   const [deleteDialogOpen, setDeleteDialogOpen] = React.useState(false);
   const [rotating, setRotating] = React.useState(false);
   const [canDecrypt, setCanDecrypt] = React.useState(false);
-  const { enqueueSnackbar } = useSnackbar();
+  const { enqueueSnackbar } = useNotification();
   const { permissions } = usePermissions(namespace || undefined);
 
   // Check if user can decrypt secrets (requires get permission on Secrets)

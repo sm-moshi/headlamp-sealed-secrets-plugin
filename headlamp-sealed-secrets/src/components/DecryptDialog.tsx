@@ -18,8 +18,8 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import { useSnackbar } from 'notistack';
 import React from 'react';
+import { useNotification } from '../hooks/useNotification';
 import { SealedSecret } from '../lib/SealedSecretCRD';
 
 interface DecryptDialogProps {
@@ -38,7 +38,7 @@ export function DecryptDialog({ sealedSecret, secretKey, onClose }: DecryptDialo
   );
   const [showValue, setShowValue] = React.useState(false);
   const [countdown, setCountdown] = React.useState(30);
-  const { enqueueSnackbar } = useSnackbar();
+  const { enqueueSnackbar } = useNotification();
 
   // Auto-hide after 30 seconds
   React.useEffect(() => {

@@ -26,6 +26,7 @@ import { SealedSecretList } from './components/SealedSecretList';
 import { SealingKeysView } from './components/SealingKeysView';
 import { SecretDetailsSection } from './components/SecretDetailsSection';
 import { SettingsPage } from './components/SettingsPage';
+import { NotificationProvider } from './hooks/useNotification';
 
 /**
  * Register sidebar navigation
@@ -65,9 +66,11 @@ registerRoute({
   path: '/sealedsecrets/:namespace?/:name?',
   sidebar: 'sealed-secrets-list',
   component: () => (
-    <ApiErrorBoundary>
-      <SealedSecretList />
-    </ApiErrorBoundary>
+    <NotificationProvider>
+      <ApiErrorBoundary>
+        <SealedSecretList />
+      </ApiErrorBoundary>
+    </NotificationProvider>
   ),
   exact: true,
   name: 'sealedsecret',
@@ -78,9 +81,11 @@ registerRoute({
   path: '/sealedsecrets/keys',
   sidebar: 'sealing-keys',
   component: () => (
-    <ApiErrorBoundary>
-      <SealingKeysView />
-    </ApiErrorBoundary>
+    <NotificationProvider>
+      <ApiErrorBoundary>
+        <SealingKeysView />
+      </ApiErrorBoundary>
+    </NotificationProvider>
   ),
   exact: true,
 });

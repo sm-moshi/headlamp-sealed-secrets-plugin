@@ -7,9 +7,9 @@
 import { K8s } from '@kinvolk/headlamp-plugin/lib';
 import { SectionBox, SimpleTable, StatusLabel } from '@kinvolk/headlamp-plugin/lib/CommonComponents';
 import { Box, Button, Chip } from '@mui/material';
-import { useSnackbar } from 'notistack';
 import React from 'react';
 import { fetchPublicCertificate, getPluginConfig } from '../lib/controller';
+import { useNotification } from '../hooks/useNotification';
 import { isCertificateExpiringSoon, parseCertificateInfo } from '../lib/crypto';
 import { CertificateInfo, PEMCertificate } from '../types';
 import { ControllerStatus } from './ControllerStatus';
@@ -28,7 +28,7 @@ interface SealingKey {
 export function SealingKeysView() {
   const config = getPluginConfig();
   const [secrets, , loading] = K8s.ResourceClasses.Secret.useList({ namespace: config.controllerNamespace });
-  const { enqueueSnackbar } = useSnackbar();
+  const { enqueueSnackbar } = useNotification();
 
   // Filter for sealing key secrets
   const sealingKeys: SealingKey[] = React.useMemo(() => {
