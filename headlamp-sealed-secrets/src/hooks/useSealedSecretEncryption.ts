@@ -6,8 +6,8 @@
  */
 
 import React from 'react';
-import { fetchPublicCertificate, getPluginConfig } from '../lib/controller';
 import { useNotification } from './useNotification';
+import { fetchPublicCertificate, getPluginConfig } from '../lib/controller';
 import {
   encryptKeyValues,
   isCertificateExpiringSoon,

@@ -28,12 +28,12 @@ import {
 } from '@mui/material';
 import React from 'react';
 import { useParams } from 'react-router-dom';
+import { useNotification } from '../hooks/useNotification';
 import { usePermissions } from '../hooks/usePermissions';
 import { getPluginConfig, rotateSealedSecret } from '../lib/controller';
 import { canDecryptSecrets } from '../lib/rbac';
 import { SealedSecret } from '../lib/SealedSecretCRD';
 import { SealedSecretScope } from '../types';
-import { useNotification } from '../hooks/useNotification';
 import { DecryptDialog } from './DecryptDialog';
 import { SealedSecretDetailSkeleton } from './LoadingSkeletons';
 
