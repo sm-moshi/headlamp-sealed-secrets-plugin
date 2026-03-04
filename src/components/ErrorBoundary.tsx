@@ -64,58 +64,6 @@ abstract class BaseErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoun
 }
 
 /**
- * Error boundary for cryptographic operations
- *
- * Catches errors during encryption/decryption and provides
- * helpful context about what might have gone wrong.
- */
-export class CryptoErrorBoundary extends BaseErrorBoundary {
-  renderError() {
-    return (
-      <Box p={3}>
-        <Alert
-          severity="error"
-          icon={<Icon icon="mdi:alert-circle-outline" />}
-          action={
-            <Button color="inherit" size="small" onClick={this.handleReset}>
-              Retry
-            </Button>
-          }
-        >
-          <Typography variant="h6" gutterBottom>
-            Cryptographic Operation Failed
-          </Typography>
-          <Typography variant="body2" paragraph>
-            An error occurred during encryption or decryption. This might indicate:
-          </Typography>
-          <ul style={{ margin: 0, paddingLeft: 20 }}>
-            <li>Invalid or expired controller certificate</li>
-            <li>Browser cryptography compatibility issue</li>
-            <li>Malformed secret data</li>
-            <li>Controller not reachable or misconfigured</li>
-          </ul>
-          {this.state.error && (
-            <Typography
-              variant="body2"
-              sx={{ mt: 2, fontFamily: 'monospace', fontSize: '0.875rem' }}
-            >
-              {(() => {
-                try {
-                  const msg = this.state.error.message || this.state.error.toString();
-                  return `Error: ${String(msg)}`;
-                } catch (e) {
-                  return 'Error: [Unable to display error message]';
-                }
-              })()}
-            </Typography>
-          )}
-        </Alert>
-      </Box>
-    );
-  }
-}
-
-/**
  * Error boundary for API operations
  *
  * Catches errors during Kubernetes API calls and provides

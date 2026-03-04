@@ -15,7 +15,6 @@ const localStorageMock = {
 
 import { describe, expect, it } from 'vitest';
 import {
-  isValidNamespace,
   validatePEMCertificate,
   validateSecretKey,
   validateSecretName,
@@ -77,27 +76,6 @@ describe('validators', () => {
     it('should accept names starting with numbers', () => {
       const result = validateSecretName('123-secret');
       expect(result.valid).toBe(true);
-    });
-  });
-
-  describe('validateNamespace', () => {
-    it('should accept valid namespace names', () => {
-      expect(isValidNamespace('default')).toBe(true);
-      expect(isValidNamespace('kube-system')).toBe(true);
-      expect(isValidNamespace('my-namespace')).toBe(true);
-      expect(isValidNamespace('ns-123')).toBe(true);
-    });
-
-    it('should reject invalid namespace names', () => {
-      expect(isValidNamespace('')).toBe(false);
-      expect(isValidNamespace('My-Namespace')).toBe(false);
-      expect(isValidNamespace('-namespace')).toBe(false);
-      expect(isValidNamespace('namespace-')).toBe(false);
-      expect(isValidNamespace('namespace_name')).toBe(false);
-    });
-
-    it('should reject namespaces exceeding 253 characters', () => {
-      expect(isValidNamespace('x'.repeat(254))).toBe(false);
     });
   });
 

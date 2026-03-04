@@ -5,51 +5,6 @@
  * and runtime type checking for SealedSecret objects.
  */
 
-import { SealedSecretInterface, SealedSecretScope } from '../types';
-import { SealedSecret } from './SealedSecretCRD';
-
-/**
- * Runtime type guard for SealedSecret
- *
- * @param obj Object to check
- * @returns true if obj is a SealedSecret instance
- */
-export function isSealedSecret(obj: any): obj is SealedSecret {
-  return (
-    obj instanceof SealedSecret &&
-    obj.jsonData &&
-    'spec' in obj.jsonData &&
-    'encryptedData' in obj.jsonData.spec
-  );
-}
-
-/**
- * Validate SealedSecret structure
- *
- * @param obj Object to validate
- * @returns true if obj has valid SealedSecret structure
- */
-export function validateSealedSecretInterface(obj: any): obj is SealedSecretInterface {
-  return (
-    typeof obj === 'object' &&
-    obj !== null &&
-    'spec' in obj &&
-    typeof obj.spec === 'object' &&
-    'encryptedData' in obj.spec &&
-    typeof obj.spec.encryptedData === 'object'
-  );
-}
-
-/**
- * Validate scope value
- *
- * @param value Value to check
- * @returns true if value is a valid SealedSecretScope
- */
-export function isSealedSecretScope(value: any): value is SealedSecretScope {
-  return ['strict', 'namespace-wide', 'cluster-wide'].includes(value);
-}
-
 /**
  * Validate Kubernetes resource name
  *
@@ -61,7 +16,7 @@ export function isSealedSecretScope(value: any): value is SealedSecretScope {
  * @param name Name to validate
  * @returns true if valid Kubernetes resource name
  */
-export function isValidK8sName(name: string): boolean {
+function isValidK8sName(name: string): boolean {
   if (!name || name.length === 0 || name.length > 253) {
     return false;
   }
@@ -76,7 +31,7 @@ export function isValidK8sName(name: string): boolean {
  * @param key Key to validate
  * @returns true if valid Kubernetes key
  */
-export function isValidK8sKey(key: string): boolean {
+function isValidK8sKey(key: string): boolean {
   if (!key || key.length === 0 || key.length > 253) {
     return false;
   }
@@ -93,7 +48,7 @@ export function isValidK8sKey(key: string): boolean {
  * @param value String to validate
  * @returns true if valid PEM format
  */
-export function isValidPEM(value: string): boolean {
+function isValidPEM(value: string): boolean {
   if (!value || typeof value !== 'string') {
     return false;
   }
@@ -101,28 +56,6 @@ export function isValidPEM(value: string): boolean {
   // Check for PEM markers and basic structure
   const pemRegex = /^-----BEGIN CERTIFICATE-----\s+[\s\S]+\s+-----END CERTIFICATE-----\s*$/;
   return pemRegex.test(value.trim());
-}
-
-/**
- * Validate that a value is not empty
- *
- * @param value Value to check
- * @returns true if value is non-empty string
- */
-export function isNonEmpty(value: string): boolean {
-  return typeof value === 'string' && value.trim().length > 0;
-}
-
-/**
- * Validate namespace name
- *
- * Same rules as resource names
- *
- * @param namespace Namespace to validate
- * @returns true if valid namespace name
- */
-export function isValidNamespace(namespace: string): boolean {
-  return isValidK8sName(namespace);
 }
 
 /**
@@ -219,32 +152,6 @@ export function validatePEMCertificate(pem: string): ValidationResult {
       valid: false,
       error: 'Invalid PEM format. Must contain BEGIN CERTIFICATE and END CERTIFICATE markers',
     };
-  }
-
-  return { valid: true };
-}
-
-/**
- * Validate plugin configuration
- *
- * @param config Configuration to validate
- * @returns Validation result with error message if invalid
- */
-export function validatePluginConfig(config: {
-  controllerName?: string;
-  controllerNamespace?: string;
-  controllerPort?: number;
-}): ValidationResult {
-  if (!config.controllerName || !isValidK8sName(config.controllerName)) {
-    return { valid: false, error: 'Invalid controller name' };
-  }
-
-  if (!config.controllerNamespace || !isValidNamespace(config.controllerNamespace)) {
-    return { valid: false, error: 'Invalid controller namespace' };
-  }
-
-  if (!config.controllerPort || config.controllerPort < 1 || config.controllerPort > 65535) {
-    return { valid: false, error: 'Invalid controller port (must be 1-65535)' };
   }
 
   return { valid: true };

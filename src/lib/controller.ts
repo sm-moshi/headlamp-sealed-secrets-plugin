@@ -27,7 +27,7 @@ export interface ControllerHealthStatus {
 /**
  * Build the controller proxy URL
  */
-export function getControllerProxyURL(config: PluginConfig, path: string): string {
+function getControllerProxyURL(config: PluginConfig, path: string): string {
   const { controllerNamespace, controllerName, controllerPort } = config;
   return `/api/v1/namespaces/${controllerNamespace}/services/http:${controllerName}:${controllerPort}/proxy${path}`;
 }
@@ -75,38 +75,6 @@ export async function fetchPublicCertificate(
     initialDelayMs: 1000,
     maxDelayMs: 10000,
   });
-}
-
-/**
- * Verify that a SealedSecret can be decrypted by the controller
- *
- * @param config Plugin configuration
- * @param sealedSecretYaml YAML or JSON of the SealedSecret
- * @returns Result containing verification status or error message
- */
-export async function verifySealedSecret(
-  config: PluginConfig,
-  sealedSecretYaml: string
-): AsyncResult<boolean, string> {
-  const url = getControllerProxyURL(config, '/v1/verify');
-
-  const result = await tryCatchAsync(async () => {
-    const response = await fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: sealedSecretYaml,
-    });
-
-    return response.ok;
-  });
-
-  if (result.ok === false) {
-    return Err(`Verification failed: ${result.error.message}`);
-  }
-
-  return result;
 }
 
 /**
@@ -218,14 +186,14 @@ export async function checkControllerHealth(
       version,
       latencyMs,
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     const latencyMs = Date.now() - startTime;
 
     // Determine error type
     let errorMessage = 'Controller unreachable';
-    if (error.name === 'AbortError') {
+    if (error instanceof Error && error.name === 'AbortError') {
       errorMessage = 'Request timed out after 5 seconds';
-    } else if (error.message) {
+    } else if (error instanceof Error) {
       errorMessage = error.message;
     }
 

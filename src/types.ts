@@ -76,17 +76,6 @@ export function PlaintextValue(value: string): PlaintextValue {
 }
 
 /**
- * Create a branded encrypted value
- * This is typically used by encryption functions
- *
- * @example
- * return Ok(EncryptedValue(encryptedString));
- */
-export function EncryptedValue(value: string): EncryptedValue {
-  return value as EncryptedValue;
-}
-
-/**
  * Create a branded base64 string
  *
  * @example
@@ -104,17 +93,6 @@ export function Base64String(value: string): Base64String {
  */
 export function PEMCertificate(value: string): PEMCertificate {
   return value as PEMCertificate;
-}
-
-/**
- * Unwrap a branded type to get the raw string
- * Use sparingly - only when you need the raw value
- *
- * @example
- * const rawValue = unwrap(plaintextValue);
- */
-export function unwrap<T extends string>(value: T): string {
-  return value;
 }
 
 /**
@@ -196,7 +174,7 @@ export interface SealedSecretSpec {
 /**
  * SealedSecret status condition
  */
-export interface SealedSecretCondition {
+interface SealedSecretCondition {
   type: string;
   status: 'True' | 'False' | 'Unknown';
   lastTransitionTime?: string;
@@ -234,30 +212,11 @@ export interface PluginConfig {
 }
 
 /**
- * Default plugin configuration
- */
-export const DEFAULT_CONFIG: PluginConfig = {
-  controllerName: 'sealed-secrets-controller',
-  controllerNamespace: 'kube-system',
-  controllerPort: 8080,
-};
-
-/**
  * Key-value pair for encryption dialog
  */
 export interface SecretKeyValue {
   key: string;
   value: string;
-}
-
-/**
- * Encryption request parameters
- */
-export interface EncryptionRequest {
-  name: string;
-  namespace: string;
-  scope: SealedSecretScope;
-  keyValues: SecretKeyValue[];
 }
 
 /**

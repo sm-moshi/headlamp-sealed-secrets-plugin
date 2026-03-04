@@ -37,16 +37,14 @@ export function useControllerHealth(autoRefresh = false, refreshIntervalMs = 300
     const config = getPluginConfig();
     const result = await checkControllerHealth(config);
 
-    if (result.ok) {
-      setHealth(result.value);
-    } else if (result.ok === false) {
-      // Even on error, checkControllerHealth returns a status
-      // This shouldn't happen, but handle gracefully
+    if (result.ok === false) {
       setHealth({
         healthy: false,
         reachable: false,
         error: result.error,
       });
+    } else {
+      setHealth(result.value);
     }
 
     setLoading(false);

@@ -52,7 +52,7 @@ export function parsePublicKeyFromCert(
  * @param scope The encryption scope
  * @returns Result containing base64-encoded encrypted value or error message
  */
-export function encryptValue(
+function encryptValue(
   publicKey: forge.pki.rsa.PublicKey,
   value: PlaintextValue,
   namespace: string,
@@ -98,7 +98,7 @@ export function encryptValue(
     const tag = (cipher.mode as any).tag.getBytes();
 
     // Construct the sealed secret format:
-    // [2-byte length of encrypted session key][encrypted session key][IV][encrypted value][auth tag]
+    // [2-byte key length][encrypted key][IV][ciphertext][auth tag]
     const sessionKeyLength = encryptedSessionKey.length;
     const lengthBytes =
       String.fromCharCode((sessionKeyLength >> 8) & 0xff) +
@@ -143,17 +143,6 @@ export function encryptKeyValues(
   }
 
   return Ok(encryptedData);
-}
-
-/**
- * Validate a PEM certificate
- *
- * @param pemCert PEM-encoded certificate string (branded type)
- * @returns true if certificate is valid, false otherwise
- */
-export function validateCertificate(pemCert: PEMCertificate): boolean {
-  const result = parsePublicKeyFromCert(pemCert);
-  return result.ok;
 }
 
 /**

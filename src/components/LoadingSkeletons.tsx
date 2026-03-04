@@ -117,22 +117,6 @@ export function SealingKeysListSkeleton() {
 }
 
 /**
- * Skeleton for certificate information
- *
- * Shows placeholder for certificate metadata
- */
-export function CertificateInfoSkeleton() {
-  return (
-    <Box>
-      <Skeleton variant="text" width="60%" animation="wave" />
-      <Skeleton variant="text" width="40%" animation="wave" />
-      <Skeleton variant="text" width="50%" animation="wave" />
-      <Skeleton variant="text" width="45%" animation="wave" />
-    </Box>
-  );
-}
-
-/**
  * Skeleton for controller health status
  *
  * Shows placeholder for health check information

@@ -14,6 +14,12 @@ import {
   SealedSecretStatus,
 } from '../types';
 
+interface CRDVersion {
+  name: string;
+  storage?: boolean;
+  served?: boolean;
+}
+
 /**
  * SealedSecret CRD class
  * Represents a Bitnami Sealed Secret resource in the cluster
@@ -128,7 +134,7 @@ export class SealedSecret extends KubeObject<SealedSecretInterface> {
       );
 
       // Find the storage version (the version used for persistence)
-      const storageVersion = crd.spec?.versions?.find((v: any) => v.storage === true);
+      const storageVersion = crd.spec?.versions?.find((v: CRDVersion) => v.storage === true);
 
       if (storageVersion) {
         const version = `${crd.spec.group}/${storageVersion.name}`;
@@ -137,7 +143,7 @@ export class SealedSecret extends KubeObject<SealedSecretInterface> {
       }
 
       // Fallback to first served version if no storage version found
-      const servedVersion = crd.spec?.versions?.find((v: any) => v.served === true);
+      const servedVersion = crd.spec?.versions?.find((v: CRDVersion) => v.served === true);
       if (servedVersion) {
         const version = `${crd.spec.group}/${servedVersion.name}`;
         this.detectedVersion = version;

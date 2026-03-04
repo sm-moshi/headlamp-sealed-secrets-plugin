@@ -115,8 +115,11 @@ export function EncryptDialog({ open, onClose }: EncryptDialogProps) {
       setScope('strict');
       setKeyValues([{ key: '', value: '', showValue: false }]);
       onClose();
-    } catch (error: any) {
-      enqueueSnackbar(`Failed to create SealedSecret: ${error.message}`, { variant: 'error' });
+    } catch (error: unknown) {
+      enqueueSnackbar(
+        `Failed to create SealedSecret: ${error instanceof Error ? error.message : String(error)}`,
+        { variant: 'error' }
+      );
     }
   };
 

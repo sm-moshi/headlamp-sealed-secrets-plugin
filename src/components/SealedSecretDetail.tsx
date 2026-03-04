@@ -71,7 +71,7 @@ export function SealedSecretDetail() {
   React.useEffect(() => {
     let cancelled = false;
     if (namespace) {
-      canDecryptSecrets(namespace).then((result) => {
+      canDecryptSecrets(namespace).then(result => {
         if (!cancelled) setCanDecrypt(result);
       });
     }
@@ -110,8 +110,11 @@ export function SealedSecretDetail() {
       await sealedSecret.delete();
       enqueueSnackbar('SealedSecret deleted successfully', { variant: 'success' });
       window.history.back();
-    } catch (error: any) {
-      enqueueSnackbar(`Failed to delete SealedSecret: ${error.message}`, { variant: 'error' });
+    } catch (error: unknown) {
+      enqueueSnackbar(
+        `Failed to delete SealedSecret: ${error instanceof Error ? error.message : String(error)}`,
+        { variant: 'error' }
+      );
     }
     setDeleteDialogOpen(false);
   }, [sealedSecret, enqueueSnackbar]);
@@ -121,11 +124,17 @@ export function SealedSecretDetail() {
     try {
       const config = getPluginConfig();
       const yaml = JSON.stringify(sealedSecret.jsonData);
-      await rotateSealedSecret(config, yaml);
-      enqueueSnackbar('SealedSecret re-encrypted successfully', { variant: 'success' });
-      // The resource will auto-refresh via the watch
-    } catch (error: any) {
-      enqueueSnackbar(`Failed to re-encrypt: ${error.message}`, { variant: 'error' });
+      const result = await rotateSealedSecret(config, yaml);
+      if (result.ok === false) {
+        enqueueSnackbar(`Failed to re-encrypt: ${result.error}`, { variant: 'error' });
+      } else {
+        enqueueSnackbar('SealedSecret re-encrypted successfully', { variant: 'success' });
+      }
+    } catch (error: unknown) {
+      enqueueSnackbar(
+        `Failed to re-encrypt: ${error instanceof Error ? error.message : String(error)}`,
+        { variant: 'error' }
+      );
     } finally {
       setRotating(false);
     }
@@ -160,7 +169,12 @@ export function SealedSecretDetail() {
             title={
               <Box display="flex" alignItems="center" justifyContent="space-between">
                 <Box display="flex" alignItems="center" gap={1}>
-                  <IconButton onClick={handleClose} edge="start" size="small" aria-label="Close detail panel">
+                  <IconButton
+                    onClick={handleClose}
+                    edge="start"
+                    size="small"
+                    aria-label="Close detail panel"
+                  >
                     <Icon icon="mdi:close" />
                   </IconButton>
                   <span>{sealedSecret.metadata.name}</span>
@@ -252,11 +266,20 @@ export function SealedSecretDetail() {
                   label: 'Actions',
                   getter: (row: { key: string; value: string }) =>
                     canDecrypt ? (
-                      <Button size="small" onClick={() => setDecryptKey(row.key)} aria-label={`Decrypt ${row.key}`}>
+                      <Button
+                        size="small"
+                        onClick={() => setDecryptKey(row.key)}
+                        aria-label={`Decrypt ${row.key}`}
+                      >
                         Decrypt
                       </Button>
                     ) : (
-                      <Button size="small" disabled title="No permission to access Secrets" aria-label={`Decrypt ${row.key} (no permission)`}>
+                      <Button
+                        size="small"
+                        disabled
+                        title="No permission to access Secrets"
+                        aria-label={`Decrypt ${row.key} (no permission)`}
+                      >
                         Decrypt
                       </Button>
                     ),
@@ -337,7 +360,11 @@ export function SealedSecretDetail() {
           />
         )}
 
-        <Dialog open={deleteDialogOpen} onClose={() => setDeleteDialogOpen(false)} aria-labelledby="delete-dialog-title">
+        <Dialog
+          open={deleteDialogOpen}
+          onClose={() => setDeleteDialogOpen(false)}
+          aria-labelledby="delete-dialog-title"
+        >
           <DialogTitle id="delete-dialog-title">Delete SealedSecret?</DialogTitle>
           <DialogContent>
             Are you sure you want to delete the SealedSecret <strong>{name}</strong>? This will also

@@ -94,8 +94,11 @@ export function SealingKeysView() {
       document.body.removeChild(a);
       URL.revokeObjectURL(url);
       enqueueSnackbar('Certificate downloaded', { variant: 'success' });
-    } catch (error: any) {
-      enqueueSnackbar(`Failed to create download: ${error.message}`, { variant: 'error' });
+    } catch (error: unknown) {
+      enqueueSnackbar(
+        `Failed to create download: ${error instanceof Error ? error.message : String(error)}`,
+        { variant: 'error' }
+      );
     }
   };
 
@@ -189,7 +192,12 @@ export function SealingKeysView() {
                   return (
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                       <span>{expiryDate}</span>
-                      <span style={{ color: 'var(--mui-palette-text-secondary, #666)', fontSize: '0.9em' }}>
+                      <span
+                        style={{
+                          color: 'var(--mui-palette-text-secondary, #666)',
+                          fontSize: '0.9em',
+                        }}
+                      >
                         ({certInfo.daysUntilExpiry} days)
                       </span>
                     </Box>

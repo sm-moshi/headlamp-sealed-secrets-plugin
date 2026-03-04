@@ -14,8 +14,24 @@ import {
 import React from 'react';
 import { SealedSecret } from '../lib/SealedSecretCRD';
 
+interface OwnerReference {
+  kind: string;
+  apiVersion: string;
+  name: string;
+  uid: string;
+}
+
+interface SecretResource {
+  kind?: string;
+  metadata?: {
+    name?: string;
+    namespace?: string;
+    ownerReferences?: OwnerReference[];
+  };
+}
+
 interface SecretDetailsSectionProps {
-  resource: any; // The Secret resource
+  resource: SecretResource;
 }
 
 /**
@@ -24,7 +40,7 @@ interface SecretDetailsSectionProps {
 export function SecretDetailsSection({ resource }: SecretDetailsSectionProps) {
   // Check if this Secret is owned by a SealedSecret
   const ownerRef = resource.metadata?.ownerReferences?.find(
-    (ref: any) => ref.kind === 'SealedSecret' && ref.apiVersion === 'bitnami.com/v1alpha1'
+    ref => ref.kind === 'SealedSecret' && ref.apiVersion === 'bitnami.com/v1alpha1'
   );
 
   if (!ownerRef) {

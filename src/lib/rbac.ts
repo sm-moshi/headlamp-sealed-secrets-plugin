@@ -51,8 +51,12 @@ export async function checkSealedSecretPermissions(
       canDelete,
       canList,
     });
-  } catch (error: any) {
-    return Err(`Failed to check SealedSecret permissions: ${error.message}`);
+  } catch (error: unknown) {
+    return Err(
+      `Failed to check SealedSecret permissions: ${
+        error instanceof Error ? error.message : String(error)
+      }`
+    );
   }
 }
 
@@ -65,20 +69,6 @@ export async function checkSealedSecretPermissions(
 export async function canDecryptSecrets(namespace: string): Promise<boolean> {
   try {
     return await checkPermission('get', 'secrets', '', namespace);
-  } catch {
-    return false;
-  }
-}
-
-/**
- * Check if user can view sealing keys (requires get permission on Secrets in controller namespace)
- *
- * @param controllerNamespace Namespace where sealed-secrets controller is running
- * @returns true if user has permission to get Secrets in controller namespace
- */
-export async function canViewSealingKeys(controllerNamespace: string): Promise<boolean> {
-  try {
-    return await checkPermission('get', 'secrets', '', controllerNamespace);
   } catch {
     return false;
   }
@@ -129,37 +119,4 @@ async function checkPermission(
 
   // Return false on error (assume no permission)
   return result.ok ? result.value : false;
-}
-
-/**
- * Check permissions for multiple namespaces
- *
- * Useful for multi-namespace views to determine which namespaces the user
- * can interact with.
- *
- * @param namespaces Array of namespace names to check
- * @returns Map of namespace to permissions
- */
-export async function checkMultiNamespacePermissions(
-  namespaces: string[]
-): AsyncResult<Record<string, ResourcePermissions>, string> {
-  try {
-    const results = await Promise.all(
-      namespaces.map(async ns => {
-        const perms = await checkSealedSecretPermissions(ns);
-        return { namespace: ns, permissions: perms };
-      })
-    );
-
-    const permissionsMap: Record<string, ResourcePermissions> = {};
-    for (const { namespace, permissions } of results) {
-      if (permissions.ok) {
-        permissionsMap[namespace] = permissions.value;
-      }
-    }
-
-    return Ok(permissionsMap);
-  } catch (error: any) {
-    return Err(`Failed to check multi-namespace permissions: ${error.message}`);
-  }
 }

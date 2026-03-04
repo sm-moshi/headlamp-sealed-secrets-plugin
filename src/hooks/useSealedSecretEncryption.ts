@@ -32,11 +32,30 @@ export interface EncryptionRequest {
 }
 
 /**
+ * Shape of the SealedSecret manifest constructed for API submission
+ */
+interface SealedSecretManifest {
+  apiVersion: string;
+  kind: string;
+  metadata: {
+    name: string;
+    namespace: string;
+    annotations: Record<string, string>;
+  };
+  spec: {
+    encryptedData: Record<string, string>;
+    template: {
+      metadata: Record<string, unknown>;
+    };
+  };
+}
+
+/**
  * Result of successful encryption
  */
 export interface EncryptionResult {
   /** The complete SealedSecret object ready to apply */
-  sealedSecretData: any;
+  sealedSecretData: SealedSecretManifest;
   /** Information about the certificate used */
   certificateInfo?: CertificateInfo;
 }
@@ -158,7 +177,7 @@ export function useSealedSecretEncryption() {
         }
 
         // Step 6: Construct the SealedSecret object
-        const sealedSecretData: any = {
+        const sealedSecretData: SealedSecretManifest = {
           apiVersion: 'bitnami.com/v1alpha1',
           kind: 'SealedSecret',
           metadata: {
@@ -186,8 +205,8 @@ export function useSealedSecretEncryption() {
           sealedSecretData,
           certificateInfo: certInfo,
         });
-      } catch (error: any) {
-        const errorMsg = error.message || 'Unknown encryption error';
+      } catch (error: unknown) {
+        const errorMsg = error instanceof Error ? error.message : String(error);
         enqueueSnackbar(errorMsg, { variant: 'error' });
         return Err(errorMsg);
       } finally {
