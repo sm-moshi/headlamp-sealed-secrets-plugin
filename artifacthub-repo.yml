@@ -1,6 +1,6 @@
 # Artifact Hub repository metadata file
 # https://github.com/artifacthub/hub/blob/master/docs/metadata/artifacthub-repo.yml
-repositoryID: 5574d37c-c4ae-45ab-a378-ef24aaba5b4c
+repositoryID: 3d4645ad-d227-4fc0-8cae-8f8ee7794da2
 owners:
   - name: privilegedescalation
     email: privilegedescalation@users.noreply.github.com
