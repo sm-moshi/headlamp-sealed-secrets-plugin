@@ -1,13 +1,13 @@
 # Artifact Hub package metadata file
 # https://github.com/artifacthub/hub/blob/master/docs/metadata/artifacthub-pkg.yml
-version: "0.2.21"
+version: "0.4.2"
 name: headlamp-sealed-secrets
 displayName: Sealed Secrets
 createdAt: "2026-02-12T00:00:00Z"
 description: A comprehensive Headlamp plugin for managing Bitnami Sealed Secrets with client-side encryption and RBAC-aware UI
 license: Apache-2.0
 homeURL: https://github.com/privilegedescalation/headlamp-sealed-secrets-plugin
-appVersion: 0.2.21
+appVersion: "0.36.0"
 containersImages:
   - name: sealed-secrets-controller
     image: docker.io/bitnami/sealed-secrets-controller:v0.24.0
@@ -19,8 +19,8 @@ keywords:
   - encryption
   - security
 annotations:
-  headlamp/plugin/archive-url: "https://github.com/privilegedescalation/headlamp-sealed-secrets-plugin/releases/download/v0.2.21/sealed-secrets-0.2.21.tar.gz"
-  headlamp/plugin/archive-checksum: "sha256:0019dfc4b32d63c1392aa264aed2253c1e0c2fb09216f8e2cc269bbfb8bb49b5"
+  headlamp/plugin/archive-url: "https://github.com/privilegedescalation/headlamp-sealed-secrets-plugin/releases/download/v0.4.2/sealed-secrets-0.4.2.tar.gz"
+  headlamp/plugin/archive-checksum: sha256:457ae456ec0e3597ae9c628e27bd794e2beb122784d4c77b82e494b329f3855b
   headlamp/plugin/version-compat: ">=0.13.0"
   headlamp/plugin/distro-compat: "desktop,in-cluster,web,docker-desktop"
 links:
