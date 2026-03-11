@@ -11,10 +11,10 @@ vi.mock('react-router-dom', () => ({
   useParams: vi.fn().mockReturnValue({ namespace: 'default', name: 'my-secret' }),
 }));
 
-// Mock notistack
+// Mock useNotification (replaces notistack)
 const mockEnqueueSnackbar = vi.fn();
-vi.mock('notistack', () => ({
-  useSnackbar: () => ({ enqueueSnackbar: mockEnqueueSnackbar }),
+vi.mock('../hooks/useNotification', () => ({
+  useNotification: () => ({ enqueueSnackbar: mockEnqueueSnackbar }),
 }));
 
 // Mock iconify

@@ -6,10 +6,10 @@ import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import React from 'react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-// Mock notistack
+// Mock useNotification (replaces notistack)
 const mockEnqueueSnackbar = vi.fn();
-vi.mock('notistack', () => ({
-  useSnackbar: () => ({ enqueueSnackbar: mockEnqueueSnackbar }),
+vi.mock('../hooks/useNotification', () => ({
+  useNotification: () => ({ enqueueSnackbar: mockEnqueueSnackbar }),
 }));
 
 // Mock headlamp

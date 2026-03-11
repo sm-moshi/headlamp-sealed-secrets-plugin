@@ -6,8 +6,8 @@
 
 import { SectionBox } from '@kinvolk/headlamp-plugin/lib/CommonComponents';
 import { Box, Button, Divider, TextField, Typography } from '@mui/material';
-import { useSnackbar } from 'notistack';
 import React from 'react';
+import { useNotification } from '../hooks/useNotification';
 import { getPluginConfig, savePluginConfig } from '../lib/controller';
 import { PluginConfig } from '../types';
 import { ControllerStatus } from './ControllerStatus';
@@ -29,7 +29,7 @@ export function SettingsPage(props: PluginSettingsProps) {
     controllerNamespace: (data?.controllerNamespace as string) ?? storedConfig.controllerNamespace,
     controllerPort: (data?.controllerPort as number) ?? storedConfig.controllerPort,
   });
-  const { enqueueSnackbar } = useSnackbar();
+  const { enqueueSnackbar } = useNotification();
 
   const handleSave = () => {
     savePluginConfig(config);

@@ -7,8 +7,8 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 // Mock dependencies
 const mockEnqueueSnackbar = vi.fn();
-vi.mock('notistack', () => ({
-  useSnackbar: () => ({ enqueueSnackbar: mockEnqueueSnackbar }),
+vi.mock('./useNotification', () => ({
+  useNotification: () => ({ enqueueSnackbar: mockEnqueueSnackbar }),
 }));
 
 vi.mock('../lib/controller', () => ({

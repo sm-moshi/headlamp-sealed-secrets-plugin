@@ -22,8 +22,8 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import { useSnackbar } from 'notistack';
 import React from 'react';
+import { useNotification } from '../hooks/useNotification';
 import { useSealedSecretEncryption } from '../hooks/useSealedSecretEncryption';
 import { SealedSecret } from '../lib/SealedSecretCRD';
 import { SealedSecretScope, SecretKeyValue } from '../types';
@@ -43,7 +43,7 @@ export function EncryptDialog({ open, onClose }: EncryptDialogProps) {
   const [keyValues, setKeyValues] = React.useState<(SecretKeyValue & { showValue: boolean })[]>([
     { key: '', value: '', showValue: false },
   ]);
-  const { enqueueSnackbar } = useSnackbar();
+  const { enqueueSnackbar } = useNotification();
   const { encrypt, encrypting } = useSealedSecretEncryption();
 
   const [namespaces] = K8s.ResourceClasses.Namespace.useList();
