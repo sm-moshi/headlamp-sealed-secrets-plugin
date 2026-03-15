@@ -1,0 +1,133 @@
+# Headlamp Sealed Secrets Plugin — release pipeline
+#
+# Triggered by version tags (v*). Builds the plugin tarball, creates a
+# GitHub release with the tarball attached, and updates artifacthub-pkg.yml
+# with the archive URL and checksum so ArtifactHub picks up the new version.
+#
+# Release workflow:
+#   1. Bump version in package.json
+#   2. Commit: "release: vX.Y.Z"
+#   3. Tag:    git tag vX.Y.Z
+#   4. Push:   git push && git push --tags
+#   5. This pipeline runs automatically
+when:
+  - event: tag
+    ref: refs/tags/v*
+
+variables:
+  - &cache_image "meltwater/drone-cache@sha256:f4429bda3e4f2af2cceb40deee10b8cc5613aae7c8b08ad15c54109cad7fa9a3"
+  - &cache_settings
+    access_key:
+      from_secret: garage_s3_access_key
+    secret_key:
+      from_secret: garage_s3_secret_key
+    backend: s3
+    endpoint: http://garage.garage.svc.cluster.local:3900
+    bucket: buildkit-cache
+    region: garage
+    path_style: true
+    archive_format: zstd
+    cache_key: "sealed-secrets-plugin-{{ checksum \"package-lock.json\" }}"
+    mount:
+      - .npm-cache
+
+steps:
+  - name: verify-version
+    image: dhi.io/node:24-debian13-dev
+    commands:
+      - |
+        TAG_VERSION="${CI_COMMIT_TAG#v}"
+        PKG_VERSION=$(node -p "require('./package.json').version")
+        if [ "$TAG_VERSION" != "$PKG_VERSION" ]; then
+          echo "ERROR: Tag version ($TAG_VERSION) does not match package.json version ($PKG_VERSION)"
+          echo "Bump package.json version before tagging."
+          exit 1
+        fi
+        echo "Version verified: $TAG_VERSION"
+
+  - name: restore-cache
+    failure: ignore
+    image: *cache_image
+    settings:
+      <<: *cache_settings
+      restore: true
+
+  - name: install
+    image: dhi.io/node:24-debian13-dev
+    environment:
+      npm_config_cache: /woodpecker/src/github.com/sm-moshi/headlamp-sealed-secrets-plugin/.npm-cache
+    commands:
+      - mkdir -p .npm-cache
+      - npm ci --ignore-scripts
+
+  - name: quality-checks
+    image: dhi.io/node:24-debian13-dev
+    commands:
+      - npm run tsc
+      - npm test
+
+  - name: build-and-package
+    image: dhi.io/node:24-debian13-dev
+    commands:
+      - npm run build
+      - npm run package
+      - ls -la *.tar.gz
+
+  - name: github-release
+    image: woodpeckerci/plugin-release
+    settings:
+      api_key:
+        from_secret: github_token
+      base_url: https://api.github.com
+      files:
+        - "*.tar.gz"
+      checksum:
+        - sha256
+      title: "${CI_COMMIT_TAG}"
+
+  - name: update-artifacthub
+    image: dhi.io/node:24-debian13-dev
+    environment:
+      GITHUB_TOKEN:
+        from_secret: github_token
+    commands:
+      - |
+        VERSION="${CI_COMMIT_TAG#v}"
+        TARBALL=$(ls sealed-secrets-*.tar.gz)
+        CHECKSUM=$(sha256sum "$TARBALL" | cut -d' ' -f1)
+        DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ')
+        ARCHIVE_URL="https://github.com/${CI_REPO}/releases/download/${CI_COMMIT_TAG}/${TARBALL}"
+
+        echo "Version:  $VERSION"
+        echo "Tarball:  $TARBALL"
+        echo "Checksum: $CHECKSUM"
+        echo "URL:      $ARCHIVE_URL"
+
+        # Update artifacthub-pkg.yml fields
+        sed -i "s|^version: .*|version: \"${VERSION}\"|" artifacthub-pkg.yml
+        sed -i "s|^createdAt: .*|createdAt: \"${DATE}\"|" artifacthub-pkg.yml
+        sed -i "s|headlamp/plugin/archive-url: .*|headlamp/plugin/archive-url: \"${ARCHIVE_URL}\"|" artifacthub-pkg.yml
+        sed -i "s|headlamp/plugin/archive-checksum: .*|headlamp/plugin/archive-checksum: sha256:${CHECKSUM}|" artifacthub-pkg.yml
+
+        echo "--- Updated artifacthub-pkg.yml ---"
+        grep -A2 'version:' artifacthub-pkg.yml | head -3
+        grep 'archive-url\|archive-checksum' artifacthub-pkg.yml
+
+        # Commit and push to main
+        git config user.name "Woodpecker CI"
+        git config user.email "ci@m0sh1.cc"
+        git remote set-url origin "https://x-access-token:${GITHUB_TOKEN}@github.com/${CI_REPO}.git"
+        git fetch origin main
+        git checkout main
+
+        git add artifacthub-pkg.yml
+        git diff --cached --quiet && echo "No changes to commit" && exit 0
+        git commit -m "chore(release): update ArtifactHub metadata for ${CI_COMMIT_TAG}"
+        git push origin main
+
+  - name: rebuild-cache
+    failure: ignore
+    image: *cache_image
+    settings:
+      <<: *cache_settings
+      rebuild: true
