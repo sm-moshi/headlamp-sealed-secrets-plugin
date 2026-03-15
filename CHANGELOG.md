@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.24] - 2026-03-15
+
 ### Fixed
 - EncryptDialog: array index used as React key caused stale input state on row reorder/delete
 - DecryptDialog: unhandled `atob()` exception on invalid base64 secret data
@@ -14,12 +16,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - useNotification: `Date.now()` key collisions when two notifications fired in same millisecond
 - crypto.ts: `as any` type cast on GCM tag replaced with typed `ByteStringBuffer` assertion
 - EncryptDialog: partial key-value rows (key without value) passed to encryption
+- SettingsPage: missing `sr-only` CSS class replaced with inline visually-hidden styles
 
 ### Changed
 - VersionWarning: extracted hardcoded `v0.24.0` install URL into `INSTALL_VERSION` constant
 - SettingsPage: cleaned up `Record<>` type syntax in SDK boundary casts
 - Removed generic filler agents (agent-installer, agent-organizer, multi-agent-coordinator)
 - Added `sealed-secrets-qa` code review agent for plugin-specific quality checks
+- Updated all repo references from upstream `privilegedescalation` to `sm-moshi` fork
+- Removed dead upstream artefacts (.github/, .pluginrc, .mcp.json)
+- ArtifactHub badge updated to new `headlamp-sealed-secrets-plugin` repository
+- Woodpecker CI: added release pipeline and S3 npm caching, upgraded to Node 24
 
 ## [0.2.21] - 2026-03-04
 
@@ -140,7 +147,8 @@ Version 0.2.3 was published but with checksum mismatch on Artifact Hub. Supersed
 - Dependencies: node-forge for cryptography
 - Compatible with Headlamp v0.13.0+
 
-[Unreleased]: https://github.com/sm-moshi/headlamp-sealed-secrets-plugin/compare/v0.2.21...HEAD
+[Unreleased]: https://github.com/sm-moshi/headlamp-sealed-secrets-plugin/compare/v0.2.24...HEAD
+[0.2.24]: https://github.com/sm-moshi/headlamp-sealed-secrets-plugin/compare/v0.2.21...v0.2.24
 [0.2.21]: https://github.com/privilegedescalation/headlamp-sealed-secrets-plugin/compare/v0.2.20...v0.2.21
 [0.2.4]: https://github.com/privilegedescalation/headlamp-sealed-secrets-plugin/releases/tag/v0.2.4
 [0.2.3]: https://github.com/privilegedescalation/headlamp-sealed-secrets-plugin/releases/tag/v0.2.3
