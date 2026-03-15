@@ -8,6 +8,9 @@ description: A comprehensive Headlamp plugin for managing Bitnami Sealed Secrets
 license: Apache-2.0
 homeURL: https://github.com/sm-moshi/headlamp-sealed-secrets-plugin
 appVersion: "0.36.1"
+containersImages:
+  - name: sealed-secrets-controller
+    image: docker.io/bitnami/sealed-secrets-controller:0.36.1
 keywords:
   - headlamp
   - kubernetes
@@ -40,17 +43,15 @@ install: |
 
   ### Install the Plugin
 
-  #### Option 1: From NPM
-  ```bash
-  npm install -g headlamp-sealed-secrets
-  ```
+  #### Option 1: Headlamp Plugin Catalogue (Recommended)
+  Browse the Headlamp Plugin Manager (Settings > Plugins > Catalogue) and install **sealed-secrets** directly.
 
   #### Option 2: Build from Source
   ```bash
   git clone https://github.com/sm-moshi/headlamp-sealed-secrets-plugin
   cd headlamp-sealed-secrets-plugin
-  npm install
-  npm run build
+  pnpm install
+  pnpm run build
   ```
 
   Then copy the `dist` folder to your Headlamp plugins directory:
