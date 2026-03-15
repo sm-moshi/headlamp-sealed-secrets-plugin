@@ -7,6 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+- EncryptDialog: array index used as React key caused stale input state on row reorder/delete
+- DecryptDialog: unhandled `atob()` exception on invalid base64 secret data
+- SettingsPage: `parseInt()` NaN propagated to config when port field cleared
+- useNotification: `Date.now()` key collisions when two notifications fired in same millisecond
+- crypto.ts: `as any` type cast on GCM tag replaced with typed `ByteStringBuffer` assertion
+- EncryptDialog: partial key-value rows (key without value) passed to encryption
+
+### Changed
+- VersionWarning: extracted hardcoded `v0.24.0` install URL into `INSTALL_VERSION` constant
+- SettingsPage: cleaned up `Record<>` type syntax in SDK boundary casts
+- Removed generic filler agents (agent-installer, agent-organizer, multi-agent-coordinator)
+- Added `sealed-secrets-qa` code review agent for plugin-specific quality checks
+
 ## [0.2.21] - 2026-03-04
 
 ### Added
