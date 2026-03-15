@@ -7,10 +7,7 @@ createdAt: "2026-02-12T00:00:00Z"
 description: A comprehensive Headlamp plugin for managing Bitnami Sealed Secrets with client-side encryption and RBAC-aware UI
 license: Apache-2.0
 homeURL: https://github.com/sm-moshi/headlamp-sealed-secrets-plugin
-appVersion: "0.36.0"
-containersImages:
-  - name: sealed-secrets-controller
-    image: docker.io/bitnami/sealed-secrets-controller:v0.36.1
+appVersion: "0.36.1"
 keywords:
   - headlamp
   - kubernetes
