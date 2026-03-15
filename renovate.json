@@ -15,7 +15,8 @@
   "prHourlyLimit": 5,
   "prConcurrentLimit": 5,
   "enabledManagers": [
-    "npm"
+    "npm",
+    "woodpecker"
   ],
   "labels": [
     "dependencies"
