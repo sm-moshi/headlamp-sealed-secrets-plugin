@@ -82,6 +82,7 @@ steps:
       checksum:
         - sha256
       title: "${CI_COMMIT_TAG}"
+      draft: false
 
   - name: update-artifacthub
     image: dhi.io/node:22.22.1-debian13-dev
