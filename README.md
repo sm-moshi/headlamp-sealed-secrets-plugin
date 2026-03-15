@@ -1,6 +1,6 @@
 # Headlamp Sealed Secrets Plugin
 
-[![Artifact Hub](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/package/headlamp/sealed-secrets/sealed-secrets)](https://artifacthub.io/packages/headlamp/sealed-secrets/sealed-secrets)
+[![Artifact Hub](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/headlamp-sealed-secrets-plugin)](https://artifacthub.io/packages/search?repo=headlamp-sealed-secrets-plugin)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![GitHub release](https://img.shields.io/github/v/release/sm-moshi/headlamp-sealed-secrets-plugin)](https://github.com/sm-moshi/headlamp-sealed-secrets-plugin/releases)
 [![GitHub issues](https://img.shields.io/github/issues/sm-moshi/headlamp-sealed-secrets-plugin)](https://github.com/sm-moshi/headlamp-sealed-secrets-plugin/issues)
