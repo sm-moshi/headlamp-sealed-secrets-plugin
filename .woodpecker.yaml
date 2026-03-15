@@ -1,0 +1,32 @@
+# Headlamp Sealed Secrets Plugin — lint, type-check, test, build
+when:
+  - event: manual
+  - event: push
+    branch: main
+  - event: pull_request
+
+steps:
+  - name: install
+    image: dhi.io/node:22-debian13-dev
+    commands:
+      - npm ci --ignore-scripts
+
+  - name: lint
+    image: dhi.io/node:22-debian13-dev
+    commands:
+      - npm run lint
+
+  - name: tsc
+    image: dhi.io/node:22-debian13-dev
+    commands:
+      - npm run tsc
+
+  - name: test
+    image: dhi.io/node:22-debian13-dev
+    commands:
+      - npm test
+
+  - name: build
+    image: dhi.io/node:22-debian13-dev
+    commands:
+      - npm run build
