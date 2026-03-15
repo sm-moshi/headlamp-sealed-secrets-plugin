@@ -6,6 +6,9 @@ build/
 .env
 .env.local
 .eslintcache
+.npm-cache/
+.pnpm-store/
+package-lock.json
 
 # IDE
 .vscode/

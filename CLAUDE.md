@@ -14,16 +14,16 @@ Headlamp plugin for managing Bitnami Sealed Secrets — client-side encryption, 
 ## Commands
 
 ```bash
-npm start          # dev server with hot reload
-npm run build      # production build
-npm run package    # package for headlamp
-npm run tsc        # TypeScript type check (no emit)
-npm run lint       # ESLint
-npm run lint:fix   # ESLint with auto-fix
-npm run format     # Prettier write
-npm run format:check # Prettier check
-npm test           # vitest run
-npm run test:watch # vitest watch mode
+pnpm start          # dev server with hot reload
+pnpm run build      # production build
+pnpm run package    # package for headlamp
+pnpm run tsc        # TypeScript type check (no emit)
+pnpm run lint       # ESLint
+pnpm run lint:fix   # ESLint with auto-fix
+pnpm run format     # Prettier write
+pnpm run format:check # Prettier check
+pnpm test           # vitest run
+pnpm run test:watch # vitest watch mode
 ```
 
 All tests and `tsc` must pass before committing.
