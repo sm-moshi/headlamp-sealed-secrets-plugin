@@ -27,9 +27,9 @@ variables:
     region: garage
     path_style: true
     archive_format: zstd
-    cache_key: "sealed-secrets-plugin-{{ checksum \"package-lock.json\" }}"
+    cache_key: "sealed-secrets-plugin-{{ checksum \"pnpm-lock.yaml\" }}"
     mount:
-      - .npm-cache
+      - .pnpm-store
 
 steps:
   - name: verify-version
@@ -54,23 +54,21 @@ steps:
 
   - name: install
     image: dhi.io/node:22.22.1-debian13-dev
-    environment:
-      npm_config_cache: /woodpecker/src/github.com/sm-moshi/headlamp-sealed-secrets-plugin/.npm-cache
     commands:
-      - mkdir -p .npm-cache
-      - npm ci --ignore-scripts
+      - pnpm config set store-dir /woodpecker/src/github.com/sm-moshi/headlamp-sealed-secrets-plugin/.pnpm-store
+      - pnpm install --frozen-lockfile
 
   - name: quality-checks
     image: dhi.io/node:22.22.1-debian13-dev
     commands:
-      - npm run tsc
-      - npm test
+      - pnpm run tsc
+      - pnpm test
 
   - name: build-and-package
     image: dhi.io/node:22.22.1-debian13-dev
     commands:
-      - npm run build
-      - npm run package
+      - pnpm run build
+      - pnpm run package
       - ls -la *.tar.gz
 
   - name: github-release
