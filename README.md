@@ -2,8 +2,8 @@
 
 [![Artifact Hub](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/package/headlamp/sealed-secrets/sealed-secrets)](https://artifacthub.io/packages/headlamp/sealed-secrets/sealed-secrets)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-[![GitHub release](https://img.shields.io/github/v/release/privilegedescalation/headlamp-sealed-secrets-plugin)](https://github.com/privilegedescalation/headlamp-sealed-secrets-plugin/releases)
-[![GitHub issues](https://img.shields.io/github/issues/privilegedescalation/headlamp-sealed-secrets-plugin)](https://github.com/privilegedescalation/headlamp-sealed-secrets-plugin/issues)
+[![GitHub release](https://img.shields.io/github/v/release/sm-moshi/headlamp-sealed-secrets-plugin)](https://github.com/sm-moshi/headlamp-sealed-secrets-plugin/releases)
+[![GitHub issues](https://img.shields.io/github/issues/sm-moshi/headlamp-sealed-secrets-plugin)](https://github.com/sm-moshi/headlamp-sealed-secrets-plugin/issues)
 [![Test Coverage](https://img.shields.io/badge/coverage-92%25-brightgreen)](docs/development/testing.md)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.6.2-blue)](https://www.typescriptlang.org/)
 
@@ -31,7 +31,7 @@ Browse the Headlamp Plugin Manager (Settings → Plugins → Catalog) and instal
 
 #### Option 2: Manual Tarball Install
 
-Download the latest tarball from the [Releases page](https://github.com/privilegedescalation/headlamp-sealed-secrets-plugin/releases), then extract it into your Headlamp plugins directory:
+Download the latest tarball from the [Releases page](https://github.com/sm-moshi/headlamp-sealed-secrets-plugin/releases), then extract it into your Headlamp plugins directory:
 
 ```bash
 # macOS
@@ -46,7 +46,7 @@ tar -xzf sealed-secrets-*.tar.gz -C ~/.config/Headlamp/plugins/
 #### Option 3: Build from Source
 
 ```bash
-git clone https://github.com/privilegedescalation/headlamp-sealed-secrets-plugin.git
+git clone https://github.com/sm-moshi/headlamp-sealed-secrets-plugin.git
 cd headlamp-sealed-secrets-plugin
 npm install
 npm run build
@@ -241,7 +241,7 @@ npm run tsc
 | **Documentation** | Tutorials, guides, examples | ✅ Yes |
 | **Testing** | More test coverage, edge cases | ✅ Yes |
 | **Features** | Bulk operations, secret templates | ⚠️ Discuss first |
-| **Bug Fixes** | See [open issues](https://github.com/privilegedescalation/headlamp-sealed-secrets-plugin/issues) | ✅ Yes |
+| **Bug Fixes** | See [open issues](https://github.com/sm-moshi/headlamp-sealed-secrets-plugin/issues) | ✅ Yes |
 | **Accessibility** | ARIA improvements, keyboard nav | ✅ Yes |
 | **Translations** | i18n support (future) | 📅 Planned |
 
@@ -272,14 +272,14 @@ See [CHANGELOG.md](CHANGELOG.md) for details on each release.
    - [API Reference](docs/api-reference/generated/) - TypeScript API docs
 
 2. **🔍 Search Existing Issues**
-   - [Open Issues](https://github.com/privilegedescalation/headlamp-sealed-secrets-plugin/issues)
-   - [Closed Issues](https://github.com/privilegedescalation/headlamp-sealed-secrets-plugin/issues?q=is%3Aissue+is%3Aclosed)
+   - [Open Issues](https://github.com/sm-moshi/headlamp-sealed-secrets-plugin/issues)
+   - [Closed Issues](https://github.com/sm-moshi/headlamp-sealed-secrets-plugin/issues?q=is%3Aissue+is%3Aclosed)
 
 3. ** Ask the Community**
-   - [GitHub Discussions](https://github.com/privilegedescalation/headlamp-sealed-secrets-plugin/discussions)
+   - [GitHub Discussions](https://github.com/sm-moshi/headlamp-sealed-secrets-plugin/discussions)
 
 4. ** Report a Bug**
-   - [Create New Issue](https://github.com/privilegedescalation/headlamp-sealed-secrets-plugin/issues/new)
+   - [Create New Issue](https://github.com/sm-moshi/headlamp-sealed-secrets-plugin/issues/new)
    - Include: Plugin version, Headlamp version, error messages, steps to reproduce
 
 ### Common Issues
@@ -305,10 +305,10 @@ Built with:
 ## Links
 
 ### Project Resources
-- **[Releases](https://github.com/privilegedescalation/headlamp-sealed-secrets-plugin/releases)** - Download plugin
+- **[Releases](https://github.com/sm-moshi/headlamp-sealed-secrets-plugin/releases)** - Download plugin
 -  **[Documentation](docs/README.md)** - Complete docs
--  **[Issues](https://github.com/privilegedescalation/headlamp-sealed-secrets-plugin/issues)** - Bug reports
--  **[Discussions](https://github.com/privilegedescalation/headlamp-sealed-secrets-plugin/discussions)** - Q&A
+-  **[Issues](https://github.com/sm-moshi/headlamp-sealed-secrets-plugin/issues)** - Bug reports
+-  **[Discussions](https://github.com/sm-moshi/headlamp-sealed-secrets-plugin/discussions)** - Q&A
 -  **[Changelog](CHANGELOG.md)** - Version history
 
 ### External Resources

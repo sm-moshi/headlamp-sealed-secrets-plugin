@@ -97,12 +97,12 @@ If you can't find a solution:
    - Look for errors in Console tab
 
 3. **Search GitHub Issues**:
-   - [Open Issues](https://github.com/privilegedescalation/headlamp-sealed-secrets-plugin/issues)
-   - [Closed Issues](https://github.com/privilegedescalation/headlamp-sealed-secrets-plugin/issues?q=is%3Aissue+is%3Aclosed)
+   - [Open Issues](https://github.com/sm-moshi/headlamp-sealed-secrets-plugin/issues)
+   - [Closed Issues](https://github.com/sm-moshi/headlamp-sealed-secrets-plugin/issues?q=is%3Aissue+is%3Aclosed)
 
 4. **Ask for Help**:
-   - [GitHub Discussions](https://github.com/privilegedescalation/headlamp-sealed-secrets-plugin/discussions)
-   - [Create New Issue](https://github.com/privilegedescalation/headlamp-sealed-secrets-plugin/issues/new)
+   - [GitHub Discussions](https://github.com/sm-moshi/headlamp-sealed-secrets-plugin/discussions)
+   - [Create New Issue](https://github.com/sm-moshi/headlamp-sealed-secrets-plugin/issues/new)
 
 ## Reporting Bugs
 
@@ -154,4 +154,4 @@ Missing permissions hide UI elements:
 
 - **[Common Errors](common-errors.md)** - Start with most frequent issues
 - **[User Guide](../user-guide/)** - Review feature documentation
-- **[GitHub Issues](https://github.com/privilegedescalation/headlamp-sealed-secrets-plugin/issues)** - Search existing issues
+- **[GitHub Issues](https://github.com/sm-moshi/headlamp-sealed-secrets-plugin/issues)** - Search existing issues

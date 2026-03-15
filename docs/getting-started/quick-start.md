@@ -226,5 +226,5 @@ Now that you've created your first sealed secret, explore more features:
 
 - **Documentation**: [Full docs](../README.md)
 - **Troubleshooting**: [Common issues](../troubleshooting/README.md)
-- **GitHub Issues**: [Report bugs](https://github.com/privilegedescalation/headlamp-sealed-secrets-plugin/issues)
-- **Discussions**: [Ask questions](https://github.com/privilegedescalation/headlamp-sealed-secrets-plugin/discussions)
+- **GitHub Issues**: [Report bugs](https://github.com/sm-moshi/headlamp-sealed-secrets-plugin/issues)
+- **Discussions**: [Ask questions](https://github.com/sm-moshi/headlamp-sealed-secrets-plugin/discussions)

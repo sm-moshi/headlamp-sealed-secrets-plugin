@@ -635,7 +635,7 @@ If encryption still fails:
 3. **Try kubeseal CLI** to isolate issue
 
 4. **Report issue**:
-   - [Plugin Issues](https://github.com/privilegedescalation/headlamp-sealed-secrets-plugin/issues)
+   - [Plugin Issues](https://github.com/sm-moshi/headlamp-sealed-secrets-plugin/issues)
    - [Controller Issues](https://github.com/bitnami-labs/sealed-secrets/issues)
 
 Include:

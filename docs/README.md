@@ -40,7 +40,7 @@ Complete documentation for the Headlamp Sealed Secrets plugin.
 
 ## External Resources
 
-- **GitHub**: [privilegedescalation/headlamp-sealed-secrets-plugin](https://github.com/privilegedescalation/headlamp-sealed-secrets-plugin)
-- **Issues**: [Report bugs](https://github.com/privilegedescalation/headlamp-sealed-secrets-plugin/issues)
+- **GitHub**: [sm-moshi/headlamp-sealed-secrets-plugin](https://github.com/sm-moshi/headlamp-sealed-secrets-plugin)
+- **Issues**: [Report bugs](https://github.com/sm-moshi/headlamp-sealed-secrets-plugin/issues)
 - **Headlamp**: [headlamp.dev](https://headlamp.dev)
 - **Sealed Secrets**: [bitnami-labs/sealed-secrets](https://github.com/bitnami-labs/sealed-secrets)

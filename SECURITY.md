@@ -54,7 +54,7 @@ Security updates are applied to the latest release only.
 
 If you discover a security vulnerability, please report it via:
 
-1. **GitHub Security Advisories**: [Report a vulnerability](https://github.com/privilegedescalation/headlamp-sealed-secrets-plugin/security/advisories/new)
+1. **GitHub Security Advisories**: [Report a vulnerability](https://github.com/sm-moshi/headlamp-sealed-secrets-plugin/security/advisories/new)
 
 **Please do not** open public GitHub issues for security vulnerabilities or disclose vulnerabilities publicly before a fix is available.
 
@@ -74,8 +74,8 @@ The project uses `npm audit` and Dependabot to monitor for known vulnerabilities
 
 ## Contact
 
-- **Security Issues**: [GitHub Security Advisories](https://github.com/privilegedescalation/headlamp-sealed-secrets-plugin/security/advisories)
-- **Bug Reports**: [GitHub Issues](https://github.com/privilegedescalation/headlamp-sealed-secrets-plugin/issues)
+- **Security Issues**: [GitHub Security Advisories](https://github.com/sm-moshi/headlamp-sealed-secrets-plugin/security/advisories)
+- **Bug Reports**: [GitHub Issues](https://github.com/sm-moshi/headlamp-sealed-secrets-plugin/issues)
 
 ## License
 

@@ -785,7 +785,7 @@ If permission issues persist:
    - [RBAC Good Practices](https://kubernetes.io/docs/concepts/security/rbac-good-practices/)
 
 4. **Report plugin issues**:
-   - [GitHub Issues](https://github.com/privilegedescalation/headlamp-sealed-secrets-plugin/issues)
+   - [GitHub Issues](https://github.com/sm-moshi/headlamp-sealed-secrets-plugin/issues)
 
 ## See Also
 

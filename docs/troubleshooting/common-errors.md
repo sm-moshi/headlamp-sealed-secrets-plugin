@@ -31,7 +31,7 @@ Error loading plugin headlamp-sealed-secrets: Invalid plugin manifest
 
 2. Reinstall from latest release:
    ```bash
-   curl -LO https://github.com/privilegedescalation/headlamp-sealed-secrets-plugin/releases/download/v0.2.4/headlamp-sealed-secrets-0.2.4.tar.gz
+   curl -LO https://github.com/sm-moshi/headlamp-sealed-secrets-plugin/releases/download/v0.2.4/headlamp-sealed-secrets-0.2.4.tar.gz
    tar -xzf headlamp-sealed-secrets-0.2.4.tar.gz -C ~/Library/Application\ Support/Headlamp/plugins/
    ```
 
@@ -530,7 +530,7 @@ This should not happen in production. If you see this during development:
 
 If your error isn't listed:
 
-1. **Search GitHub Issues**: [https://github.com/privilegedescalation/headlamp-sealed-secrets-plugin/issues](https://github.com/privilegedescalation/headlamp-sealed-secrets-plugin/issues)
+1. **Search GitHub Issues**: [https://github.com/sm-moshi/headlamp-sealed-secrets-plugin/issues](https://github.com/sm-moshi/headlamp-sealed-secrets-plugin/issues)
 
 2. **Check Controller Logs**:
    ```bash
@@ -543,7 +543,7 @@ If your error isn't listed:
    ```
    Then reload Headlamp.
 
-4. **Create New Issue**: [https://github.com/privilegedescalation/headlamp-sealed-secrets-plugin/issues/new](https://github.com/privilegedescalation/headlamp-sealed-secrets-plugin/issues/new)
+4. **Create New Issue**: [https://github.com/sm-moshi/headlamp-sealed-secrets-plugin/issues/new](https://github.com/sm-moshi/headlamp-sealed-secrets-plugin/issues/new)
 
 Include:
 - Full error message

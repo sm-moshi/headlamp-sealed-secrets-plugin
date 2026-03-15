@@ -6,11 +6,11 @@ displayName: Sealed Secrets
 createdAt: "2026-02-12T00:00:00Z"
 description: A comprehensive Headlamp plugin for managing Bitnami Sealed Secrets with client-side encryption and RBAC-aware UI
 license: Apache-2.0
-homeURL: https://github.com/privilegedescalation/headlamp-sealed-secrets-plugin
+homeURL: https://github.com/sm-moshi/headlamp-sealed-secrets-plugin
 appVersion: "0.36.0"
 containersImages:
   - name: sealed-secrets-controller
-    image: docker.io/bitnami/sealed-secrets-controller:v0.24.0
+    image: docker.io/bitnami/sealed-secrets-controller:v0.36.1
 keywords:
   - headlamp
   - kubernetes
@@ -19,13 +19,13 @@ keywords:
   - encryption
   - security
 annotations:
-  headlamp/plugin/archive-url: "https://github.com/privilegedescalation/headlamp-sealed-secrets-plugin/releases/download/v0.2.23/sealed-secrets-0.2.23.tar.gz"
+  headlamp/plugin/archive-url: "https://github.com/sm-moshi/headlamp-sealed-secrets-plugin/releases/download/v0.2.23/sealed-secrets-0.2.23.tar.gz"
   headlamp/plugin/archive-checksum: sha256:8396d64f86443172771e79fe0967dbf5e982413d8229f29b874a796f0ac39efb
   headlamp/plugin/version-compat: ">=0.13.0"
   headlamp/plugin/distro-compat: "desktop,in-cluster,web,docker-desktop"
 links:
   - name: Source Code
-    url: https://github.com/privilegedescalation/headlamp-sealed-secrets-plugin
+    url: https://github.com/sm-moshi/headlamp-sealed-secrets-plugin
   - name: Sealed Secrets
     url: https://github.com/bitnami-labs/sealed-secrets
   - name: Headlamp
@@ -50,7 +50,7 @@ install: |
 
   #### Option 2: Build from Source
   ```bash
-  git clone https://github.com/privilegedescalation/headlamp-sealed-secrets-plugin
+  git clone https://github.com/sm-moshi/headlamp-sealed-secrets-plugin
   cd headlamp-sealed-secrets-plugin
   npm install
   npm run build
@@ -69,11 +69,11 @@ install: |
   - Manage sealing keys
   - Configure controller settings
 
-  For detailed usage instructions, see the [README](https://github.com/privilegedescalation/headlamp-sealed-secrets-plugin/blob/main/README.md).
+  For detailed usage instructions, see the [README](https://github.com/sm-moshi/headlamp-sealed-secrets-plugin/blob/main/README.md).
 maintainers:
-  - name: privilegedescalation
-    email: privilegedescalation@users.noreply.github.com
+  - name: sm-moshi
+    email: sm-moshi@users.noreply.github.com
 recommendations:
   - url: https://artifacthub.io/packages/helm/sealed-secrets/sealed-secrets
 provider:
-  name: privilegedescalation
+  name: sm-moshi

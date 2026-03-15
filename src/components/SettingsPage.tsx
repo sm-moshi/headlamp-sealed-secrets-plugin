@@ -77,7 +77,22 @@ export function SettingsPage(props: PluginSettingsProps) {
         <Divider sx={{ mb: 3 }} role="separator" />
 
         <form aria-labelledby="settings-form-title">
-          <Typography variant="h6" id="settings-form-title" sx={{ mb: 2 }} className="sr-only">
+          <Typography
+            variant="h6"
+            id="settings-form-title"
+            sx={{
+              mb: 2,
+              position: 'absolute',
+              width: '1px',
+              height: '1px',
+              padding: 0,
+              margin: '-1px',
+              overflow: 'hidden',
+              clip: 'rect(0, 0, 0, 0)',
+              whiteSpace: 'nowrap',
+              border: 0,
+            }}
+          >
             Controller Configuration
           </Typography>
 

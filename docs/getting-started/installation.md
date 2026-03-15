@@ -27,19 +27,19 @@ Download and extract the latest release:
 
 **macOS:**
 ```bash
-curl -LO https://github.com/privilegedescalation/headlamp-sealed-secrets-plugin/releases/download/v0.2.4/headlamp-sealed-secrets-0.2.4.tar.gz
+curl -LO https://github.com/sm-moshi/headlamp-sealed-secrets-plugin/releases/download/v0.2.4/headlamp-sealed-secrets-0.2.4.tar.gz
 tar -xzf headlamp-sealed-secrets-0.2.4.tar.gz -C ~/Library/Application\ Support/Headlamp/plugins/
 ```
 
 **Linux:**
 ```bash
-curl -LO https://github.com/privilegedescalation/headlamp-sealed-secrets-plugin/releases/download/v0.2.4/headlamp-sealed-secrets-0.2.4.tar.gz
+curl -LO https://github.com/sm-moshi/headlamp-sealed-secrets-plugin/releases/download/v0.2.4/headlamp-sealed-secrets-0.2.4.tar.gz
 tar -xzf headlamp-sealed-secrets-0.2.4.tar.gz -C ~/.config/Headlamp/plugins/
 ```
 
 **Windows (PowerShell):**
 ```powershell
-Invoke-WebRequest -Uri https://github.com/privilegedescalation/headlamp-sealed-secrets-plugin/releases/download/v0.2.4/headlamp-sealed-secrets-0.2.4.tar.gz -OutFile headlamp-sealed-secrets-0.2.4.tar.gz
+Invoke-WebRequest -Uri https://github.com/sm-moshi/headlamp-sealed-secrets-plugin/releases/download/v0.2.4/headlamp-sealed-secrets-0.2.4.tar.gz -OutFile headlamp-sealed-secrets-0.2.4.tar.gz
 # Extract to %APPDATA%\Headlamp\plugins\
 ```
 
@@ -48,7 +48,7 @@ Then **restart Headlamp**.
 ### Using Install Script (macOS/Linux)
 
 ```bash
-git clone https://github.com/privilegedescalation/headlamp-sealed-secrets-plugin
+git clone https://github.com/sm-moshi/headlamp-sealed-secrets-plugin
 cd headlamp-sealed-secrets-plugin
 ./install-plugin.sh
 ```
@@ -67,7 +67,7 @@ For local development or testing:
 
 1. **Clone and build**:
    ```bash
-   git clone https://github.com/privilegedescalation/headlamp-sealed-secrets-plugin
+   git clone https://github.com/sm-moshi/headlamp-sealed-secrets-plugin
    cd headlamp-sealed-secrets-plugin/headlamp-sealed-secrets
    npm install
    npm run build
@@ -287,7 +287,7 @@ Then restart Headlamp.
 
 ## Support
 
-- **Issues**: [GitHub Issues](https://github.com/privilegedescalation/headlamp-sealed-secrets-plugin/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/privilegedescalation/headlamp-sealed-secrets-plugin/discussions)
+- **Issues**: [GitHub Issues](https://github.com/sm-moshi/headlamp-sealed-secrets-plugin/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/sm-moshi/headlamp-sealed-secrets-plugin/discussions)
 - **Headlamp Docs**: [https://headlamp.dev/docs](https://headlamp.dev/docs)
 - **Sealed Secrets**: [https://github.com/bitnami-labs/sealed-secrets](https://github.com/bitnami-labs/sealed-secrets)

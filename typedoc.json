@@ -9,7 +9,8 @@
     "src/types.ts",
     "src/hooks/useSealedSecretEncryption.ts",
     "src/hooks/usePermissions.ts",
-    "src/hooks/useControllerHealth.ts"
+    "src/hooks/useControllerHealth.ts",
+    "src/hooks/useNotification.tsx"
   ],
   "out": "docs/api-reference/generated",
   "name": "Headlamp Sealed Secrets API",
