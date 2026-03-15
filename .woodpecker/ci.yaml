@@ -31,7 +31,7 @@ steps:
       restore: true
 
   - name: install
-    image: dhi.io/node:24-debian13-dev
+    image: dhi.io/node:22.22.1-debian13-dev
     environment:
       npm_config_cache: /woodpecker/src/github.com/sm-moshi/headlamp-sealed-secrets-plugin/.npm-cache
     commands:
@@ -39,22 +39,22 @@ steps:
       - npm ci --ignore-scripts
 
   - name: lint
-    image: dhi.io/node:24-debian13-dev
+    image: dhi.io/node:22.22.1-debian13-dev
     commands:
       - npm run lint
 
   - name: tsc
-    image: dhi.io/node:24-debian13-dev
+    image: dhi.io/node:22.22.1-debian13-dev
     commands:
       - npm run tsc
 
   - name: test
-    image: dhi.io/node:24-debian13-dev
+    image: dhi.io/node:22.22.1-debian13-dev
     commands:
       - npm test
 
   - name: build
-    image: dhi.io/node:24-debian13-dev
+    image: dhi.io/node:22.22.1-debian13-dev
     commands:
       - npm run build
 
