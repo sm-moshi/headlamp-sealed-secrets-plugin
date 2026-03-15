@@ -93,21 +93,21 @@ steps:
     commands:
       - |
         VERSION="${CI_COMMIT_TAG#v}"
-        TARBALL=$(ls sealed-secrets-*.tar.gz)
-        CHECKSUM=$(sha256sum "$TARBALL" | cut -d' ' -f1)
-        DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ')
-        ARCHIVE_URL="https://github.com/${CI_REPO}/releases/download/${CI_COMMIT_TAG}/${TARBALL}"
+        TARBALL=$$(ls sealed-secrets-*.tar.gz)
+        CHECKSUM=$$(sha256sum "$$TARBALL" | cut -d' ' -f1)
+        DATE=$$(date -u +'%Y-%m-%dT%H:%M:%SZ')
+        ARCHIVE_URL="https://github.com/${CI_REPO}/releases/download/${CI_COMMIT_TAG}/$$TARBALL"
 
-        echo "Version:  $VERSION"
-        echo "Tarball:  $TARBALL"
-        echo "Checksum: $CHECKSUM"
-        echo "URL:      $ARCHIVE_URL"
+        echo "Version:  $$VERSION"
+        echo "Tarball:  $$TARBALL"
+        echo "Checksum: $$CHECKSUM"
+        echo "URL:      $$ARCHIVE_URL"
 
         # Update artifacthub-pkg.yml fields
-        sed -i "s|^version: .*|version: \"${VERSION}\"|" artifacthub-pkg.yml
-        sed -i "s|^createdAt: .*|createdAt: \"${DATE}\"|" artifacthub-pkg.yml
-        sed -i "s|headlamp/plugin/archive-url: .*|headlamp/plugin/archive-url: \"${ARCHIVE_URL}\"|" artifacthub-pkg.yml
-        sed -i "s|headlamp/plugin/archive-checksum: .*|headlamp/plugin/archive-checksum: sha256:${CHECKSUM}|" artifacthub-pkg.yml
+        sed -i "s|^version: .*|version: \"$$VERSION\"|" artifacthub-pkg.yml
+        sed -i "s|^createdAt: .*|createdAt: \"$$DATE\"|" artifacthub-pkg.yml
+        sed -i "s|headlamp/plugin/archive-url: .*|headlamp/plugin/archive-url: \"$$ARCHIVE_URL\"|" artifacthub-pkg.yml
+        sed -i "s|headlamp/plugin/archive-checksum: .*|headlamp/plugin/archive-checksum: sha256:$$CHECKSUM|" artifacthub-pkg.yml
 
         echo "--- Updated artifacthub-pkg.yml ---"
         grep -A2 'version:' artifacthub-pkg.yml | head -3
@@ -116,7 +116,7 @@ steps:
         # Commit and push to main
         git config user.name "Woodpecker CI"
         git config user.email "ci@m0sh1.cc"
-        git remote set-url origin "https://x-access-token:${GITHUB_TOKEN}@github.com/${CI_REPO}.git"
+        git remote set-url origin "https://x-access-token:$$GITHUB_TOKEN@github.com/${CI_REPO}.git"
         git fetch origin main
         git checkout main
 
