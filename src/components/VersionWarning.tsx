@@ -8,6 +8,9 @@ import { Alert, Box, Button, Link } from '@mui/material';
 import React from 'react';
 import { SealedSecret } from '../lib/SealedSecretCRD';
 
+/** Controller version used in installation instructions */
+const INSTALL_VERSION = 'v0.24.0';
+
 export interface VersionWarningProps {
   /** Whether to auto-detect version on mount */
   autoDetect?: boolean;
@@ -86,7 +89,7 @@ export function VersionWarning({ autoDetect = true, showDetails = false }: Versi
               Install Sealed Secrets with:{' '}
               <code style={{ fontSize: '0.875em' }}>
                 kubectl apply -f
-                https://github.com/bitnami-labs/sealed-secrets/releases/download/v0.24.0/controller.yaml
+                https://github.com/bitnami-labs/sealed-secrets/releases/download/{INSTALL_VERSION}/controller.yaml
               </code>
               <br />
               Or visit:{' '}

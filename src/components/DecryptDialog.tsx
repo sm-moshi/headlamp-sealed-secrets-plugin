@@ -57,9 +57,13 @@ export function DecryptDialog({ sealedSecret, secretKey, onClose }: DecryptDialo
 
   const handleCopy = () => {
     if (secret && secret.data?.[secretKey]) {
-      const decoded = atob(secret.data[secretKey]);
-      navigator.clipboard.writeText(decoded);
-      enqueueSnackbar('Copied to clipboard', { variant: 'success' });
+      try {
+        const decoded = atob(secret.data[secretKey]);
+        navigator.clipboard.writeText(decoded);
+        enqueueSnackbar('Copied to clipboard', { variant: 'success' });
+      } catch {
+        enqueueSnackbar('Failed to decode secret value: invalid base64', { variant: 'error' });
+      }
     }
   };
 
@@ -113,7 +117,32 @@ export function DecryptDialog({ sealedSecret, secretKey, onClose }: DecryptDialo
     );
   }
 
-  const decodedValue = atob(encodedValue);
+  let decodedValue: string;
+  try {
+    decodedValue = atob(encodedValue);
+  } catch {
+    return (
+      <Dialog
+        open
+        onClose={onClose}
+        aria-labelledby="decrypt-decode-error-title"
+        aria-describedby="decrypt-decode-error-description"
+      >
+        <DialogTitle id="decrypt-decode-error-title">Decode Error</DialogTitle>
+        <DialogContent>
+          <Typography id="decrypt-decode-error-description">
+            The value for key <strong>{secretKey}</strong> contains invalid base64 and could not be
+            decoded.
+          </Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={onClose} aria-label="Close dialog">
+            Close
+          </Button>
+        </DialogActions>
+      </Dialog>
+    );
+  }
 
   return (
     <Dialog

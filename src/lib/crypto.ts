@@ -95,7 +95,7 @@ function encryptValue(
     cipher.finish();
 
     const encryptedValue = cipher.output.getBytes();
-    const tag = (cipher.mode as any).tag.getBytes();
+    const tag = (cipher.mode as { tag: forge.util.ByteStringBuffer }).tag.getBytes();
 
     // Construct the sealed secret format:
     // [2-byte key length][encrypted key][IV][ciphertext][auth tag]

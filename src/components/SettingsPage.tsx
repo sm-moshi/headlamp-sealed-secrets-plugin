@@ -14,8 +14,8 @@ import { ControllerStatus } from './ControllerStatus';
 import { VersionWarning } from './VersionWarning';
 
 interface PluginSettingsProps {
-  data?: { [key: string]: string | number | boolean };
-  onDataChange?: (data: { [key: string]: string | number | boolean }) => void;
+  data?: Record<string, string | number | boolean>;
+  onDataChange?: (data: Record<string, string | number | boolean>) => void;
 }
 
 /**
@@ -33,7 +33,7 @@ export function SettingsPage(props: PluginSettingsProps) {
 
   const handleSave = () => {
     savePluginConfig(config);
-    onDataChange?.(config as unknown as { [key: string]: string | number | boolean });
+    onDataChange?.(config as unknown as Record<string, string | number | boolean>);
     enqueueSnackbar('Settings saved successfully', { variant: 'success' });
   };
 
@@ -88,7 +88,7 @@ export function SettingsPage(props: PluginSettingsProps) {
             onChange={e => {
               const newConfig = { ...config, controllerName: e.target.value };
               setConfig(newConfig);
-              onDataChange?.(newConfig as unknown as { [key: string]: string | number | boolean });
+              onDataChange?.(newConfig as Record<string, string | number | boolean>);
             }}
             margin="normal"
             helperText="Name of the sealed-secrets-controller deployment/service"
@@ -108,7 +108,7 @@ export function SettingsPage(props: PluginSettingsProps) {
             onChange={e => {
               const newConfig = { ...config, controllerNamespace: e.target.value };
               setConfig(newConfig);
-              onDataChange?.(newConfig as unknown as { [key: string]: string | number | boolean });
+              onDataChange?.(newConfig as Record<string, string | number | boolean>);
             }}
             margin="normal"
             helperText="Namespace where the controller is installed"
@@ -127,9 +127,11 @@ export function SettingsPage(props: PluginSettingsProps) {
             type="number"
             value={config.controllerPort}
             onChange={e => {
-              const newConfig = { ...config, controllerPort: parseInt(e.target.value, 10) };
+              const parsed = parseInt(e.target.value, 10);
+              const port = isNaN(parsed) ? 8080 : parsed;
+              const newConfig = { ...config, controllerPort: port };
               setConfig(newConfig);
-              onDataChange?.(newConfig as unknown as { [key: string]: string | number | boolean });
+              onDataChange?.(newConfig as Record<string, string | number | boolean>);
             }}
             margin="normal"
             helperText="HTTP port of the controller service"

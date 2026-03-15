@@ -22,6 +22,8 @@ interface NotificationContextValue {
 
 const NotificationContext = React.createContext<NotificationContextValue | null>(null);
 
+let nextNotificationId = 0;
+
 /**
  * Provides notification capability to child components.
  * Wrap your route components with this provider.
@@ -32,7 +34,7 @@ export function NotificationProvider({ children }: { children: React.ReactNode }
   const enqueueSnackbar = React.useCallback(
     (message: string, options?: { variant?: string }) => {
       const variant = (options?.variant as AlertColor) || 'info';
-      setNotifications(prev => [...prev, { key: Date.now(), message, variant }]);
+      setNotifications(prev => [...prev, { key: nextNotificationId++, message, variant }]);
     },
     []
   );

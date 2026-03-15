@@ -28,6 +28,13 @@ import { useSealedSecretEncryption } from '../hooks/useSealedSecretEncryption';
 import { SealedSecret } from '../lib/SealedSecretCRD';
 import { SealedSecretScope, SecretKeyValue } from '../types';
 
+interface KeyValueRow extends SecretKeyValue {
+  id: number;
+  showValue: boolean;
+}
+
+let nextRowId = 0;
+
 interface EncryptDialogProps {
   open: boolean;
   onClose: () => void;
@@ -40,8 +47,8 @@ export function EncryptDialog({ open, onClose }: EncryptDialogProps) {
   const [name, setName] = React.useState('');
   const [namespace, setNamespace] = React.useState('default');
   const [scope, setScope] = React.useState<SealedSecretScope>('strict');
-  const [keyValues, setKeyValues] = React.useState<(SecretKeyValue & { showValue: boolean })[]>([
-    { key: '', value: '', showValue: false },
+  const [keyValues, setKeyValues] = React.useState<KeyValueRow[]>([
+    { id: nextRowId++, key: '', value: '', showValue: false },
   ]);
   const { enqueueSnackbar } = useNotification();
   const { encrypt, encrypting } = useSealedSecretEncryption();
@@ -50,7 +57,7 @@ export function EncryptDialog({ open, onClose }: EncryptDialogProps) {
 
   // Memoize callbacks to prevent re-renders
   const handleAddKeyValue = React.useCallback(() => {
-    setKeyValues(prev => [...prev, { key: '', value: '', showValue: false }]);
+    setKeyValues(prev => [...prev, { id: nextRowId++, key: '', value: '', showValue: false }]);
   }, []);
 
   const handleRemoveKeyValue = React.useCallback((index: number) => {
@@ -82,9 +89,9 @@ export function EncryptDialog({ open, onClose }: EncryptDialogProps) {
   }, []);
 
   const handleCreate = async () => {
-    // Filter out empty rows
+    // Filter out incomplete rows — require both key and value
     const validKeyValues = keyValues
-      .filter(kv => kv.key || kv.value)
+      .filter(kv => kv.key && kv.value)
       .map(kv => ({
         key: kv.key,
         value: kv.value,
@@ -113,7 +120,7 @@ export function EncryptDialog({ open, onClose }: EncryptDialogProps) {
       setName('');
       setNamespace('default');
       setScope('strict');
-      setKeyValues([{ key: '', value: '', showValue: false }]);
+      setKeyValues([{ id: nextRowId++, key: '', value: '', showValue: false }]);
       onClose();
     } catch (error: unknown) {
       enqueueSnackbar(
@@ -193,7 +200,7 @@ export function EncryptDialog({ open, onClose }: EncryptDialogProps) {
 
           {keyValues.map((kv, index) => (
             <Box
-              key={index}
+              key={kv.id}
               sx={{ display: 'flex', gap: 1, mb: 2, alignItems: 'flex-start' }}
               role="group"
               aria-label={`Secret key-value pair ${index + 1}`}
