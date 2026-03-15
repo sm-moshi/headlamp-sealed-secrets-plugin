@@ -46,6 +46,11 @@
     "security",
     "k8s"
   ],
+  "todo": [
+    "GHSA-848j-6mx2-7j84: elliptic vuln blocked on upstream",
+    "chain: @kinvolk/headlamp-plugin -> vite-plugin-node-polyfills -> crypto-browserify -> elliptic",
+    "revisit when headlamp-plugin drops crypto-browserify or elliptic is patched"
+  ],
   "overrides": {
     "typescript": "5.6.2"
   },
@@ -54,7 +59,7 @@
   },
   "devDependencies": {
     "@iconify/react": "^6.0.2",
-    "@kinvolk/headlamp-plugin": "^0.13.0",
+    "@kinvolk/headlamp-plugin": "^0.13.1",
     "@types/node-forge": "^1.3.11",
     "typedoc": "^0.28.16",
     "typedoc-plugin-markdown": "^4.10.0"

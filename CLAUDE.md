@@ -37,6 +37,7 @@ src/
 ├── headlamp-plugin.d.ts        # Module declarations for headlamp plugin
 ├── hooks/
 │   ├── useControllerHealth.ts   # Controller pod health monitoring
+│   ├── useNotification.tsx      # MUI Snackbar notification provider + hook (notistack replacement)
 │   ├── usePermissions.ts        # RBAC permission checking
 │   └── useSealedSecretEncryption.ts  # Encryption workflow hook
 ├── lib/
