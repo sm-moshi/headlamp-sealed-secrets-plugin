@@ -15,8 +15,7 @@
   "prHourlyLimit": 5,
   "prConcurrentLimit": 5,
   "enabledManagers": [
-    "npm",
-    "github-actions"
+    "npm"
   ],
   "labels": [
     "dependencies"
@@ -27,11 +26,6 @@
       "matchManagers": ["npm"],
       "matchUpdateTypes": ["minor", "patch"],
       "groupName": "npm minor and patch"
-    },
-    {
-      "matchManagers": ["github-actions"],
-      "groupName": "github-actions",
-      "addLabels": ["ci"]
     }
   ]
 }

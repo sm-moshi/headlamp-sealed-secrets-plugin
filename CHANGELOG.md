@@ -140,11 +140,11 @@ Version 0.2.3 was published but with checksum mismatch on Artifact Hub. Supersed
 - Dependencies: node-forge for cryptography
 - Compatible with Headlamp v0.13.0+
 
-[Unreleased]: https://github.com/privilegedescalation/headlamp-sealed-secrets-plugin/compare/v0.2.21...HEAD
-[0.2.21]: https://github.com/privilegedescalation/headlamp-sealed-secrets-plugin/compare/v0.2.20...v0.2.21
-[0.1.0]: https://github.com/privilegedescalation/headlamp-sealed-secrets-plugin/releases/tag/v0.1.0
-[0.2.4]: https://github.com/privilegedescalation/headlamp-sealed-secrets-plugin/releases/tag/v0.2.4
-[0.2.3]: https://github.com/privilegedescalation/headlamp-sealed-secrets-plugin/releases/tag/v0.2.3
-[0.2.2]: https://github.com/privilegedescalation/headlamp-sealed-secrets-plugin/releases/tag/v0.2.2
-[0.2.1]: https://github.com/privilegedescalation/headlamp-sealed-secrets-plugin/releases/tag/v0.2.1
-[0.2.0]: https://github.com/privilegedescalation/headlamp-sealed-secrets-plugin/releases/tag/v0.2.0
+[Unreleased]: https://github.com/sm-moshi/headlamp-sealed-secrets-plugin/compare/v0.2.21...HEAD
+[0.2.21]: https://github.com/sm-moshi/headlamp-sealed-secrets-plugin/compare/v0.2.20...v0.2.21
+[0.1.0]: https://github.com/sm-moshi/headlamp-sealed-secrets-plugin/releases/tag/v0.1.0
+[0.2.4]: https://github.com/sm-moshi/headlamp-sealed-secrets-plugin/releases/tag/v0.2.4
+[0.2.3]: https://github.com/sm-moshi/headlamp-sealed-secrets-plugin/releases/tag/v0.2.3
+[0.2.2]: https://github.com/sm-moshi/headlamp-sealed-secrets-plugin/releases/tag/v0.2.2
+[0.2.1]: https://github.com/sm-moshi/headlamp-sealed-secrets-plugin/releases/tag/v0.2.1
+[0.2.0]: https://github.com/sm-moshi/headlamp-sealed-secrets-plugin/releases/tag/v0.2.0

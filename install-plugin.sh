@@ -75,5 +75,5 @@ echo "To verify sealed-secrets controller is installed:"
 echo "  kubectl get pods -n kube-system -l name=sealed-secrets-controller"
 echo
 echo "To install sealed-secrets controller (if not present):"
-echo "  kubectl apply -f https://github.com/bitnami-labs/sealed-secrets/releases/download/v0.24.0/controller.yaml"
+echo "  kubectl apply -f https://github.com/bitnami-labs/sealed-secrets/releases/download/${SEALED_SECRETS_VERSION:-v0.24.0}/controller.yaml"
 echo
