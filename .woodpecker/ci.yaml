@@ -5,29 +5,24 @@ when:
     branch: main
   - event: pull_request
 
-variables:
-  - &cache_image "meltwater/drone-cache@sha256:f4429bda3e4f2af2cceb40deee10b8cc5613aae7c8b08ad15c54109cad7fa9a3"
-  - &cache_settings
-    access_key:
-      from_secret: garage_s3_access_key
-    secret_key:
-      from_secret: garage_s3_secret_key
-    backend: s3
-    endpoint: http://garage.garage.svc.cluster.local:3900
-    bucket: buildkit-cache
-    region: garage
-    path_style: true
-    archive_format: zstd
-    cache_key: "sealed-secrets-plugin-{{ checksum \"pnpm-lock.yaml\" }}"
-    mount:
-      - .pnpm-store
-
 steps:
   - name: restore-cache
     failure: ignore
-    image: *cache_image
+    image: plugins/cache:1.10@sha256:bfcd289fbea93d4cd2baa0a9f2157a418ce692cd77f1bf21d6a23f13d3df4e2d
     settings:
-      <<: *cache_settings
+      access_key:
+        from_secret: garage_s3_access_key
+      secret_key:
+        from_secret: garage_s3_secret_key
+      backend: s3
+      endpoint: http://garage.garage.svc.cluster.local:3900
+      bucket: buildkit-cache
+      region: garage
+      path_style: true
+      archive_format: zstd
+      cache_key: "sealed-secrets-plugin-{{ checksum \"pnpm-lock.yaml\" }}"
+      mount:
+        - .pnpm-store
       restore: true
 
   - name: install
@@ -58,7 +53,19 @@ steps:
 
   - name: rebuild-cache
     failure: ignore
-    image: *cache_image
+    image: plugins/cache:1.10@sha256:bfcd289fbea93d4cd2baa0a9f2157a418ce692cd77f1bf21d6a23f13d3df4e2d
     settings:
-      <<: *cache_settings
+      access_key:
+        from_secret: garage_s3_access_key
+      secret_key:
+        from_secret: garage_s3_secret_key
+      backend: s3
+      endpoint: http://garage.garage.svc.cluster.local:3900
+      bucket: buildkit-cache
+      region: garage
+      path_style: true
+      archive_format: zstd
+      cache_key: "sealed-secrets-plugin-{{ checksum \"pnpm-lock.yaml\" }}"
+      mount:
+        - .pnpm-store
       rebuild: true
