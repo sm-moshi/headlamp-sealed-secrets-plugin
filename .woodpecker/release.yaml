@@ -28,29 +28,13 @@ steps:
         fi
         echo "Version verified: $TAG_VERSION"
 
-  - name: restore-cache
-    failure: ignore
-    image: plugins/cache:1.10@sha256:bfcd289fbea93d4cd2baa0a9f2157a418ce692cd77f1bf21d6a23f13d3df4e2d
-    settings:
-      access_key:
-        from_secret: garage_s3_access_key
-      secret_key:
-        from_secret: garage_s3_secret_key
-      backend: s3
-      endpoint: http://garage.garage.svc.cluster.local:3900
-      bucket: buildkit-cache
-      region: garage
-      path_style: true
-      archive_format: zstd
-      cache_key: "sealed-secrets-plugin-{{ checksum \"pnpm-lock.yaml\" }}"
-      mount:
-        - .pnpm-store
-      restore: true
-
   - name: install
     image: dhi.io/node:22.22.1-debian13-dev@sha256:6c791989a1cb816cffd99cac2778f6a36233674855880823d6e99cd283e2afc0
+    volumes:
+      - woodpecker-pipeline-cache:/woodpecker/cache
     commands:
-      - pnpm config set store-dir /woodpecker/src/github.com/sm-moshi/headlamp-sealed-secrets-plugin/.pnpm-store
+      - mkdir -p /woodpecker/cache/headlamp-sealed-secrets/pnpm-store
+      - pnpm config set store-dir /woodpecker/cache/headlamp-sealed-secrets/pnpm-store
       - pnpm install --frozen-lockfile
 
   - name: quality-checks
@@ -118,22 +102,3 @@ steps:
         git diff --cached --quiet && echo "No changes to commit" && exit 0
         git commit -m "chore(release): update ArtifactHub metadata for ${CI_COMMIT_TAG}"
         git push origin main
-
-  - name: rebuild-cache
-    failure: ignore
-    image: plugins/cache:1.10@sha256:bfcd289fbea93d4cd2baa0a9f2157a418ce692cd77f1bf21d6a23f13d3df4e2d
-    settings:
-      access_key:
-        from_secret: garage_s3_access_key
-      secret_key:
-        from_secret: garage_s3_secret_key
-      backend: s3
-      endpoint: http://garage.garage.svc.cluster.local:3900
-      bucket: buildkit-cache
-      region: garage
-      path_style: true
-      archive_format: zstd
-      cache_key: "sealed-secrets-plugin-{{ checksum \"pnpm-lock.yaml\" }}"
-      mount:
-        - .pnpm-store
-      rebuild: true
