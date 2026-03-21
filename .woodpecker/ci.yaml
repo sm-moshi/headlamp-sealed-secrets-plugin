@@ -7,7 +7,7 @@ when:
 
 steps:
   - name: install
-    image: dhi.io/node:22.22.1-debian13-dev@sha256:6c791989a1cb816cffd99cac2778f6a36233674855880823d6e99cd283e2afc0
+    image: dhi.io/node:22.22.1-debian13-dev@sha256:b9250f7afdd96a1f7be89e0027b552703ad2e544cea90ba8c6c339969663a6f2
     volumes:
       - woodpecker-pipeline-cache:/woodpecker/cache
     commands:
@@ -16,21 +16,21 @@ steps:
       - pnpm install --frozen-lockfile
 
   - name: lint
-    image: dhi.io/node:22.22.1-debian13-dev@sha256:6c791989a1cb816cffd99cac2778f6a36233674855880823d6e99cd283e2afc0
+    image: dhi.io/node:22.22.1-debian13-dev@sha256:b9250f7afdd96a1f7be89e0027b552703ad2e544cea90ba8c6c339969663a6f2
     commands:
       - pnpm run lint
 
   - name: tsc
-    image: dhi.io/node:22.22.1-debian13-dev@sha256:6c791989a1cb816cffd99cac2778f6a36233674855880823d6e99cd283e2afc0
+    image: dhi.io/node:22.22.1-debian13-dev@sha256:b9250f7afdd96a1f7be89e0027b552703ad2e544cea90ba8c6c339969663a6f2
     commands:
       - pnpm run tsc
 
   - name: test
-    image: dhi.io/node:22.22.1-debian13-dev@sha256:6c791989a1cb816cffd99cac2778f6a36233674855880823d6e99cd283e2afc0
+    image: dhi.io/node:22.22.1-debian13-dev@sha256:b9250f7afdd96a1f7be89e0027b552703ad2e544cea90ba8c6c339969663a6f2
     commands:
       - pnpm test
 
   - name: build
-    image: dhi.io/node:22.22.1-debian13-dev@sha256:6c791989a1cb816cffd99cac2778f6a36233674855880823d6e99cd283e2afc0
+    image: dhi.io/node:22.22.1-debian13-dev@sha256:b9250f7afdd96a1f7be89e0027b552703ad2e544cea90ba8c6c339969663a6f2
     commands:
       - pnpm run build
