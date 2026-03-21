@@ -16,7 +16,7 @@ when:
 
 steps:
   - name: verify-version
-    image: dhi.io/node:22.22.1-debian13-dev@sha256:6c791989a1cb816cffd99cac2778f6a36233674855880823d6e99cd283e2afc0
+    image: dhi.io/node:24.14.0-debian13-dev@sha256:1ad99a6e6c7052c72c18668ff92c9073b5c69c3e7d8a42e766deeda13c2b1cc8
     commands:
       - |
         TAG_VERSION="${CI_COMMIT_TAG#v}"
@@ -29,7 +29,7 @@ steps:
         echo "Version verified: $TAG_VERSION"
 
   - name: install
-    image: dhi.io/node:22.22.1-debian13-dev@sha256:6c791989a1cb816cffd99cac2778f6a36233674855880823d6e99cd283e2afc0
+    image: dhi.io/node:24.14.0-debian13-dev@sha256:1ad99a6e6c7052c72c18668ff92c9073b5c69c3e7d8a42e766deeda13c2b1cc8
     volumes:
       - woodpecker-pipeline-cache:/woodpecker/cache
     commands:
@@ -38,13 +38,13 @@ steps:
       - pnpm install --frozen-lockfile
 
   - name: quality-checks
-    image: dhi.io/node:22.22.1-debian13-dev@sha256:6c791989a1cb816cffd99cac2778f6a36233674855880823d6e99cd283e2afc0
+    image: dhi.io/node:24.14.0-debian13-dev@sha256:1ad99a6e6c7052c72c18668ff92c9073b5c69c3e7d8a42e766deeda13c2b1cc8
     commands:
       - pnpm run tsc
       - pnpm test
 
   - name: build-and-package
-    image: dhi.io/node:22.22.1-debian13-dev@sha256:6c791989a1cb816cffd99cac2778f6a36233674855880823d6e99cd283e2afc0
+    image: dhi.io/node:24.14.0-debian13-dev@sha256:1ad99a6e6c7052c72c18668ff92c9073b5c69c3e7d8a42e766deeda13c2b1cc8
     commands:
       - pnpm run build
       - pnpm run package
@@ -64,7 +64,7 @@ steps:
       draft: false
 
   - name: update-artifacthub
-    image: dhi.io/node:22.22.1-debian13-dev@sha256:6c791989a1cb816cffd99cac2778f6a36233674855880823d6e99cd283e2afc0
+    image: dhi.io/node:24.14.0-debian13-dev@sha256:1ad99a6e6c7052c72c18668ff92c9073b5c69c3e7d8a42e766deeda13c2b1cc8
     environment:
       GITHUB_TOKEN:
         from_secret: github_token
