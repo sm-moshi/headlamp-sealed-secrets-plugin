@@ -4,24 +4,13 @@
     "config:best-practices",
     ":preserveSemverRanges"
   ],
-  "platformAutomerge": false,
-  "dependencyDashboard": true,
-  "dependencyDashboardApproval": true,
-  "dependencyDashboardAutoclose": true,
-  "timezone": "Europe/Berlin",
   "schedule": [
     "every weekend"
   ],
-  "prHourlyLimit": 5,
-  "prConcurrentLimit": 5,
   "enabledManagers": [
     "npm",
     "woodpecker"
   ],
-  "labels": [
-    "dependencies"
-  ],
-  "pinDigests": false,
   "packageRules": [
     {
       "matchManagers": ["npm"],
